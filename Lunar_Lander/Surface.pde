@@ -25,20 +25,14 @@ class LandingPlatform{
 class Surface{
   ArrayList<PVector> points = new ArrayList<PVector>();  
   ArrayList<LandingPlatform> platforms = new ArrayList<LandingPlatform>();
-  Surface(){
-    //For a start lets just generate the points randomly
-    //Later we should probably just read it from a file, that would be the best idea.
-    int numOfPoints = 50;
-    for(int i = 0; i < numOfPoints; i++){
-      points.add(new PVector(width/numOfPoints*i, random(height-100, height-10)));
-    }
-  }
+
   Surface(String fileName){
     //We need to read everything from the file, process all the points and add them to the points list
     //Then we need to process all the landingplatforms and add them to the platforms
      String[] lines = loadStrings(fileName);
      String pointsString = lines[0];
      String platformsString = lines[1];
+     
      //We process the pointsString
      String[] pointStrings = pointsString.split(" ");
      for(int i = 0; i < pointStrings.length; i+=2){
@@ -46,6 +40,7 @@ class Surface{
        //println(int(pointStrings[i]), int(pointStrings[i+1]));
        points.add(new PVector(int(pointStrings[i]), int(pointStrings[i+1])));
      }
+     
      //We process the pointsString
      String[] platformStrings = platformsString.split(" ");
      for(int i = 0; i < platformStrings.length; i+=5){
@@ -59,7 +54,7 @@ class Surface{
   void draw(){
     pushMatrix();
       stroke(200);
-      noFill();
+      fill(0);
       beginShape();
         //Lefthand bottom most corner to avoid clipping
         vertex(0, height);
