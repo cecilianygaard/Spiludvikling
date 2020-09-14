@@ -70,3 +70,59 @@ class StarryBackground extends ParticleSystem{
   particles.add(new StarParticle());
   }
 }
+class ShipParticle implements Particle{
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+  float lifespan;
+  int sx,sy,sw,sh;
+  PImage img;
+  
+  ShipParticle(PVector location_,PVector velocity_,int sx_,int sy_,int sw_,int sh_){
+  location = location_.copy();
+  velocity = velocity_.copy();
+  println("VEL:", velocity);
+  lifespan = 5000.0;
+  img = loadImage("Spaceship.png");
+  sx = sx_;
+  sy = sy_;
+  sw = sw_;
+  sh = sh_;
+}
+  void update(){
+  location.add(velocity);
+  lifespan -= 2.0;
+}
+  void draw(){
+    println(location.x,location.y);
+    image(img,location.x,location.y,sw,sh,sy,sx,sw,sh);  
+}
+  
+  void run(){
+  update();
+  draw();
+  }
+  Boolean isDead(){
+    if(lifespan < 0.0){
+    return true;
+  } else{
+    return false;
+  }
+}
+}
+
+class ShipFragments extends ParticleSystem{
+  ShipFragments(PVector location){
+    super(location);
+    
+      addParticle(0,0);
+      addParticle(1,0);
+      addParticle(0,1);
+      addParticle(1,1);
+  }
+  
+  
+  void addParticle(int col, int row){
+  particles.add(new ShipParticle(origin, new PVector(-1+col*2,-1+row*2), 10*col, 10*row, 10, 10));
+    }
+  }

@@ -1,10 +1,12 @@
 Spaceship s;
 
 StarryBackground background;
+ShipFragments shipDestroyed;
 void setup(){
   size(700, 700);
   s = new Spaceship();
   background = new StarryBackground(new PVector());
+  shipDestroyed = new ShipFragments(new PVector(width/2, height/2)); 
 }
 
 void update() {
@@ -16,6 +18,7 @@ void draw() {
 
   background(0);
   background.run();
+  shipDestroyed.run();
   s.draw();
   if(!keyPressed) {
     s.burnersApplied = false;
