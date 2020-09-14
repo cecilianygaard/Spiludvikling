@@ -34,7 +34,7 @@ class Spaceship{
   void applyGravity(){ 
     //!!!! THIS SHOULD DEFINITELY NOT BE A MEMBERVARIABLE!!!! AS WE SHOULD USE THE SAME GRAVITY FOR THE PARTICLES OR?
     //WHAT SHOULD GRAVITY BE?
-    PVector gravity = new PVector(0,0.01);
+    PVector gravity = new PVector(0,0.0005);
     //!!!!!
     acceleration.add(gravity);
   }
