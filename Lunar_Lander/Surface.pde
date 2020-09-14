@@ -54,12 +54,21 @@ class Surface{
   void updateDistanceToSpaceship(Spaceship s, PVector p1, PVector p2){
     float a = (p2.y-p1.y)/(p2.x-p1.x);
     float yCollide = p1.y + a*(s.location.x-p1.x);
-    s.distToSurf = s.location.y - yCollide;
+    s.distToSurf = yCollide - s.location.y;
   }
   
-  //In this we also update the distance from the spaceship to the 
-  Boolean collisionWithSpaceship(Spaceship s){
-    
+  //Done
+  LandingPlatform spaceshipWithinLandingPlatform(Spaceship s){
+    //We go through all of these and return that which it is between, though lookout!!! we return NULL!!!!! if it is not within any landingplatform.
+    for(LandingPlatform platform : platforms){
+      if(platform.p1.x <= s.location.x && platform.p2.x >= s.location.x){
+        return platform;
+      }
+    }
+    return null;
+  }
+  
+  void collisionSpaceship(Spaceship s){
     //These are the basic difference vectors.
     PVector TopLeft = new PVector(-s.w/2, -s.h/2);
     PVector TopRight = new PVector(s.w/2, -s.h/2);
@@ -77,33 +86,35 @@ class Surface{
     BottomRight.add(s.location);
     //Now they are proper coordinates
     PVector[] corners = {TopLeft, TopRight, BottomLeft, BottomRight};
+    
+    
     //We go through every point but the last one since we use the one in front as well.
     for(int i = 0; i < points.size()-1; i++){
       PVector p1 = points.get(i);
       PVector p2 = points.get(i+1);
+      //If the center is within the points we calculate the distance to the lines
+      if(p1.x <= s.location.x && p2.x >= s.location.x){
+        updateDistanceToSpaceship(s, p1, p2);
+      }
+      //
       for(PVector point : corners){
         //If the point is within the boundaries of the 
         if(p1.x <= point.x && p2.x >= point.x){
-          //If the point is under the line we have 
-          return pointUnderLine(point, p1, p2);
+          if(pointUnderLine(point, p1, p2)){
+            LandingPlatform platform = spaceshipWithinLandingPlatform(s);
+            if(platform == null){//If it hasn't hit the platform
+              s.alive = false;
+            }else if(s.velocity.y >= 15 || s.angle > 1 || s.angle < -1){ //If it has hit the platform, but the angle or the y-velocity wasn't "correct"
+              s.alive = false;
+            }else{//By exclusion if the above weren't true then it must have landed successfully!!!!
+              s.landed = true;
+            }
           }
         }
       }
-    return false;
-  }
-  
-  //Done
-  LandingPlatform spaceshipWithinLandingPlatform(Spaceship s){
-    //We go through all of these and return that which it is between, though lookout!!! we return NULL!!!!! if it is not within any landingplatform.
-    for(LandingPlatform platform : platforms){
-      if(platform.p1.x <= s.location.x && platform.p2.x >= s.location.x){
-        return platform;
-      }
     }
-    return null;
   }
-  
-  void collisionSpaceship(Spaceship s){}
+        
   
   void draw(){
     pushMatrix();

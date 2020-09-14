@@ -1,5 +1,8 @@
 //This is just the blueprint for the spaceship class DONE
 class Spaceship{
+  boolean alive = true;
+  boolean landed = false;
+  
   float w = 20;
   float h = 20;
   PImage img;
@@ -67,36 +70,39 @@ class Spaceship{
 
 
   void update() {
-    //Controls that control rotation and stuff
-    if(burnersApplied){
-      this.applyBurners();
+    if(!landed && alive){
+      //Controls that control rotation and stuff
+      if(burnersApplied){
+        this.applyBurners();
+      }
+      if(rotatingLeft){
+        this.rotateLeft();
+      }
+      if(rotatingRight){
+        this.rotateRight();
+      }
+      
+      //Gravity will always be applied.
+      this.applyGravity();
+      //Standard mechanics, thanks NEWTON
+      velocity.add(acceleration);
+      location.add(velocity);
+      //We clear the acceleration
+      acceleration.mult(0);
+    }else if(!alive){
+      println("AHH U DIED");
+    }else if(landed){
+      println("WUHUUU YOU LANDED SUCCESSFULLY");
     }
-    if(rotatingLeft){
-      this.rotateLeft();
-    }
-    if(rotatingRight){
-      this.rotateRight();
-    }
-    
-    //Gravity will always be applied.
-    this.applyGravity();
-    //Standard mechanics, thanks NEWTON
-    velocity.add(acceleration);
-    location.add(velocity);
-    //We clear the acceleration
-    acceleration.mult(0);
   }
 
   void draw() {
     //The spaceship will be some certain width and height.
     pushMatrix();
     //We translate to the center of the space ship
-    translate(location.x+w/2, location.y+h/2);
+    translate(location.x, location.y);
     // We rotate the given angle
     rotate(angle);
-    rectMode(CENTER);
-    fill(255);
-    rect(0, 0, w, h);
     imageMode(CENTER);
     image(img,0,0);
     if (burnersApplied) {

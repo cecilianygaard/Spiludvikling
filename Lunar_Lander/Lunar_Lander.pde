@@ -14,15 +14,12 @@ void setup() {
 
 void update() {
   s.update();
-  if(surf.collisionWithSpaceship(s)){
-    println("AFAHFSDFSDFSDFSDFSDFSDFSDFSDF", "VEL:", s.velocity);
-  }
+  surf.collisionSpaceship(s);
 }
 
 void draw() {
   if (gameStarted) {
     update();
-
     background(0);
     background.run();
     surf.draw();
@@ -71,7 +68,7 @@ void textField() {
   text("Score: " + s.score, 20, 50);
   text("Fuel: " + s.fuel, 20, 75);
   text("Time: " + round(frameCount/frameRate), 20, 100);
-  text("Altitude: " + round(s.distToSurf), 450, 50); //NEEDS TO BE CHANGED TO DISTANCE TO GROUND AND NOT BOTTOM OF SCREEN
+  text("Altitude: " + round(s.distToSurf), 450, 50);
   text("Horizontal Speed: " + round(s.velocity.x*100), 450, 75); //times 100 so the values aren't crazy small
   text("Vertical Speed: " + round(s.velocity.y*100), 450, 100);
 }
@@ -85,9 +82,9 @@ void startScreen() {
     text("Lunar Lander", width/2, 100);
     fill(255);
     rectMode(CENTER);
-      if(mouseX<width/2+50 && mouseX>width/2-50 && mouseY<height/2+20 && mouseY>height/2-20) {
-        fill(155);
-      }
+    if(mouseX<width/2+50 && mouseX>width/2-50 && mouseY<height/2+20 && mouseY>height/2-20) {
+      fill(155);
+    }
     rect(width/2, height/2, 100, 40);
     fill(0);
     textSize(15);
