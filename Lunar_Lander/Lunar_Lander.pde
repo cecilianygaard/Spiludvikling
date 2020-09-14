@@ -1,4 +1,5 @@
 Spaceship s;
+Surface surf;
 boolean gameStarted = false;
 StarryBackground background;
 //Ready to be used/spawned at spaceship death
@@ -7,6 +8,7 @@ StarryBackground background;
 void setup() {
   size(700, 700);
   s = new Spaceship();
+  surf = new Surface("surface.txt");
   background = new StarryBackground(new PVector());
 }
 
@@ -20,6 +22,7 @@ void draw() {
 
     background(0);
     background.run();
+    surf.draw();
     s.draw();
     if (!keyPressed) {
       s.burnersApplied = false;
