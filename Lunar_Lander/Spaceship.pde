@@ -2,6 +2,7 @@
 class Spaceship{
   float w = 20;
   float h = 20;
+  PImage img;
   
   
   //We are basically using a mover-class here, though as it is the only object with this functionality we will just implement it directly
@@ -22,6 +23,7 @@ class Spaceship{
     location = new PVector(width/2,0);
     velocity = new PVector(0,0);
     acceleration = new PVector(0,0);
+    img = loadImage("Spaceship.png");
   }
   
   void rotateLeft(){
@@ -69,6 +71,8 @@ class Spaceship{
       rotate(angle);
       rectMode(CENTER);
       rect(0,0,h,w);
+      imageMode(CENTER);
+      image(img,0,0);
     popMatrix();
   }
 }
