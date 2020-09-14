@@ -10,12 +10,12 @@ class Spaceship{
   PVector acceleration;
   
   //The angle of the rotation of the spaceship (in radians)
-  float angle = 0;
+  float angle;
   
   //YEAH THIS SHOULD ALSO BE CALLIBRATED
-  float burnerPower = 5;
-  float fuel;
-  
+  float burnerPower = -0.01;
+  float fuel = 200;
+  boolean burnersApplied = false;
   //WHAT SHALL BE INITIALIZED?
   Spaceship(){
     location = new PVector(width/2,0);
@@ -40,11 +40,18 @@ class Spaceship{
   }
   
   void applyBurners(){
-    //WE NEED TO CALCULATE THE BURNERFORCE'S DIRECTION FROM THE ROTATION
-    PVector burnerForce = new PVector();
+    if(fuel>0) {
+
+    float x = burnerPower * cos(angle+PI/2); //Changes from polar to cartesian
+    float y = burnerPower * sin(angle+PI/2); //Changes from polar to cartesian
+    PVector burnerForce = new PVector(x, y);
     
-    //WE NEED TO DECREASE THE AMOUNT OF FUEL AS WELL
     acceleration.add(burnerForce);
+    fuel--;
+    burnersApplied = true;
+    } else {
+      burnersApplied = false;
+    }
   }
   
 
@@ -67,7 +74,14 @@ class Spaceship{
       // We rotate the given angle
       rotate(angle);
       rectMode(CENTER);
-      rect(0,0,h,w);
+      rect(0,0,w,h);
+      if(burnersApplied) {
+      if(frameCount%6>3) {
+      triangle(w/2,h/2,-w/2,h/2,0,h/2+25);
+      } else {
+        triangle(w/2,h/2,-w/2,h/2,0,h/2+20);
+      }
+      }
     popMatrix();
   }
 }
