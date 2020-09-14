@@ -1,8 +1,10 @@
 Spaceship s;
 
-void setup() {
-  size(500, 500);
+StarryBackground background;
+void setup(){
+  size(700, 700);
   s = new Spaceship();
+  background = new StarryBackground(new PVector());
 }
 
 void update() {
@@ -13,6 +15,7 @@ void draw() {
   update();
 
   background(0);
+  background.run();
   s.draw();
   if(!keyPressed) {
     s.burnersApplied = false;

@@ -1,8 +1,9 @@
-class Spaceship {
+//This is just the blueprint for the spaceship class DONE
+class Spaceship{
   float w = 20;
   float h = 20;
-
-
+  PImage img;
+  
   //We are basically using a mover-class here, though as it is the only object with this functionality we will just implement it directly
   //ALSO REMEMBER: COMPOSITION OVER INHERITANCE
   PVector location;
@@ -17,10 +18,12 @@ class Spaceship {
   float fuel = 200;
   boolean burnersApplied = false;
   //WHAT SHALL BE INITIALIZED?
-  Spaceship() {
-    location = new PVector(width/2, 0);
-    velocity = new PVector(0, 0);
-    acceleration = new PVector(0, 0);
+
+  Spaceship(){
+    location = new PVector(width/2,0);
+    velocity = new PVector(0,0);
+    acceleration = new PVector(0,0);
+    img = loadImage("Spaceship.png");
   }
 
   void rotateLeft() {
@@ -76,6 +79,8 @@ class Spaceship {
     rectMode(CENTER);
     fill(255);
     rect(0, 0, w, h);
+    imageMode(CENTER);
+    image(img,0,0);
     if (burnersApplied) {
       if (frameCount%8>4) {
         fill(255, 0, 0);
