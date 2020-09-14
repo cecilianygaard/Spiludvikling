@@ -1,6 +1,9 @@
 Spaceship s;
 
 StarryBackground background;
+//Ready to be used/spawned at spaceship death
+//ShipFragments shipDestroyed;
+
 void setup(){
   size(700, 700);
   s = new Spaceship();
