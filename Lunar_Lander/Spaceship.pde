@@ -15,10 +15,17 @@ class Spaceship{
 
   //YEAH THIS SHOULD ALSO BE CALLIBRATED
   float burnerPower = -0.01;
-  float fuel = 200;
+  //I HAVE CHANGED THE VALUE FOR DEVELOPMENT PURPOSES
+  float fuel = 2000;
+  
+  //DIST TO SURFACE WILL BE UPDATED BY SURFACE'S COLLISION METHOD.
+  float distToSurf = 0;
+  
+  //Controls
   boolean burnersApplied = false;
-  //WHAT SHALL BE INITIALIZED?
-
+  boolean rotatingRight = false;
+  boolean rotatingLeft = false;
+  
   Spaceship(){
     location = new PVector(width/2,0);
     velocity = new PVector(0,0);
@@ -60,6 +67,17 @@ class Spaceship{
 
 
   void update() {
+    //Controls that control rotation and stuff
+    if(burnersApplied){
+      this.applyBurners();
+    }
+    if(rotatingLeft){
+      this.rotateLeft();
+    }
+    if(rotatingRight){
+      this.rotateRight();
+    }
+    
     //Gravity will always be applied.
     this.applyGravity();
     //Standard mechanics, thanks NEWTON

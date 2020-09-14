@@ -83,8 +83,6 @@ class ShipParticle implements Particle{
     origin = location_.copy();
     location = location_.copy();
     velocity = velocity_.copy();
-    println("VEL:", velocity);
-    lifespan = 255.0;
     img = loadImage("Spaceship.png");
     sx = sx_;
     sy = sy_;
@@ -95,7 +93,6 @@ class ShipParticle implements Particle{
     location.add(velocity);
   }
   void draw(){
-    println(sw, sh);
     //rect(location.x, location.y, sw, sh);
     image(img,location.x,location.y,sw,sh,sx,sy,20,20);
   }

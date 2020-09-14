@@ -14,6 +14,9 @@ void setup() {
 
 void update() {
   s.update();
+  if(surf.collisionWithSpaceship(s)){
+    println("AFAHFSDFSDFSDFSDFSDFSDFSDFSDF", "VEL:", s.velocity);
+  }
 }
 
 void draw() {
@@ -24,9 +27,6 @@ void draw() {
     background.run();
     surf.draw();
     s.draw();
-    if (!keyPressed) {
-      s.burnersApplied = false;
-    }
     textField();
   } else {
     startScreen();
@@ -37,13 +37,23 @@ void draw() {
 void keyPressed() {
   if (gameStarted) {
     if (key == 'w') {
-      s.applyBurners();
+      s.burnersApplied = true;
     } else if (key == 'd') {
-      s.rotateRight();
-      s.burnersApplied = false;
+      s.rotatingRight = true;
     } else if (key == 'a') {
-      s.rotateLeft();
+      s.rotatingLeft = true;
+    }
+  }
+}
+
+void keyReleased(){
+   if (gameStarted) {
+    if (key == 'w') {
       s.burnersApplied = false;
+    } else if (key == 'd') {
+      s.rotatingRight = false;
+    } else if (key == 'a') {
+      s.rotatingLeft = false;
     }
   }
 }
@@ -61,7 +71,7 @@ void textField() {
   text("Score: " + s.score, 20, 50);
   text("Fuel: " + s.fuel, 20, 75);
   text("Time: " + round(frameCount/frameRate), 20, 100);
-  text("Altitude: " + round(height-s.location.y), 450, 50); //NEEDS TO BE CHANGED TO DISTANCE TO GROUND AND NOT BOTTOM OF SCREEN
+  text("Altitude: " + round(s.distToSurf), 450, 50); //NEEDS TO BE CHANGED TO DISTANCE TO GROUND AND NOT BOTTOM OF SCREEN
   text("Horizontal Speed: " + round(s.velocity.x*100), 450, 75); //times 100 so the values aren't crazy small
   text("Vertical Speed: " + round(s.velocity.y*100), 450, 100);
 }
