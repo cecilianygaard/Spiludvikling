@@ -31,14 +31,14 @@ class Surface{
   String pointsToText(){
     String s = "";
     for(PVector point : points){
-      s += "("+Integer.toString(int(point.x))+","+Integer.toString(int(point.x))+"),";
+      s += Integer.toString(int(point.x))+" "+Integer.toString(int(point.y))+" ";
     }
     return s;
   }
   String landingPlatformsToText(){
     String s = "";
     for(LandingPlatform platform : landingPlatforms){
-      s += "("+Integer.toString(int(platform.p1.x))+","+Integer.toString(int(platform.p1.x))+","+Integer.toString(int(platform.p2.x))+","+Integer.toString(int(platform.p2.x))+",POINT),";
+      s += Integer.toString(int(platform.p1.x))+" "+Integer.toString(int(platform.p1.y))+" "+Integer.toString(int(platform.p2.x))+" "+Integer.toString(int(platform.p2.y))+" P ";
     }
     return s;
   }

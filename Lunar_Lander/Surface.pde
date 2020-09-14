@@ -13,7 +13,9 @@ class LandingPlatform{
   
   void draw(){
     pushMatrix();
+      rectMode(CORNER);
       fill(255);
+      println((p2.x-p1.x));
       rect(p1.x, p1.y, (p2.x-p1.x), 5);
       //WE ALSO NEED TO DRAW HOW MANY POINT THIS LANDINGPLATFORM GIVES
     popMatrix();
@@ -38,22 +40,21 @@ class Surface{
      String pointsString = lines[0];
      String platformsString = lines[1];
      //We process the pointsString
-     Boolean parenthesesClosed = false;
-     int x = 0;
-     int y = 0;
-     for(int i = 0; i < pointsString.length(); i++){
-       if(parenthesesClosed){
-         x = 0;
-         y = 0;
-         i += 2;
-         
-       }
+     String[] pointStrings = pointsString.split(" ");
+     for(int i = 0; i < pointStrings.length; i+=2){
+       //We do two at a time
+       //println(int(pointStrings[i]), int(pointStrings[i+1]));
+       points.add(new PVector(int(pointStrings[i]), int(pointStrings[i+1])));
      }
-     for(String s : parenthesesClosed.split("((.*?,.*?))")){
-       if
+     //We process the pointsString
+     String[] platformStrings = platformsString.split(" ");
+     for(int i = 0; i < platformStrings.length; i+=5){
+       //We do two at a time
+       //println(int(pointStrings[i]), int(pointStrings[i+1]));
+       platforms.add(new LandingPlatform(int(platformStrings[i]), int(platformStrings[i+1]), int(platformStrings[i+2]), int(platformStrings[i+3]), int(platformStrings[i+4])));
      }
+   }
      
-  }
   
   void draw(){
     pushMatrix();

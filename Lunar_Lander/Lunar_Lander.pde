@@ -4,7 +4,7 @@ Surface surf;
 void setup(){
   size(700, 700);
   s = new Spaceship();
-  surf = new Surface();
+  surf = new Surface("surface.txt");
 }
 
 void update(){
