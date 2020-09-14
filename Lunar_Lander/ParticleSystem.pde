@@ -26,9 +26,6 @@ class ParticleSystem{
       if(p.isDead()){
         it.remove();
       }
-    }
-    
-  }
-  
-  
+    } 
+  } 
 }

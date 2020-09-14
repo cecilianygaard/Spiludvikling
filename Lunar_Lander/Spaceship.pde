@@ -24,11 +24,11 @@ class Spaceship{
   }
   
   void rotateLeft(){
-    angle += 0.1;
+    angle -= 0.1;
   }
   
   void rotateRight(){
-    angle -= 0.1;
+    angle += 0.1;
   }
   
   void applyGravity(){ 
@@ -58,6 +58,7 @@ class Spaceship{
      //We clear the acceleration
      acceleration.mult(0);
   }
+
   void draw(){
     //The spaceship will be some certain width and height.
     pushMatrix();
