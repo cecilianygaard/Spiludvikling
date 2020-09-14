@@ -39,10 +39,10 @@ void keyPressed() {
 void textField() {
   fill(255);
   textSize(20);
-  text("Score: " + s.score, 10,50);
-  text("Fuel: " + s.fuel,10,75);
-  text("Time: " + round(frameCount/frameRate), 10,100);
-  text("Altitude: " + round(height-s.location.y), 500,50); //NEEDS TO BE CHANGED TO DISTANCE TO GROUND AND NOT BOTTOM OF SCREEN
-  text("Horizontal Speed: " + round(s.velocity.x*100), 500, 75); //times 100 so the values aren't crazy small
-  text("Vertical Speed: " + round(s.velocity.y*100), 500, 100);
+  text("Score: " + s.score, 20,50);
+  text("Fuel: " + s.fuel,20,75);
+  text("Time: " + round(frameCount/frameRate), 20,100);
+  text("Altitude: " + round(height-s.location.y), 450,50); //NEEDS TO BE CHANGED TO DISTANCE TO GROUND AND NOT BOTTOM OF SCREEN
+  text("Horizontal Speed: " + round(s.velocity.x*100), 450, 75); //times 100 so the values aren't crazy small
+  text("Vertical Speed: " + round(s.velocity.y*100), 450, 100);
 }
