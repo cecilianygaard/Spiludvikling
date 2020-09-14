@@ -3,7 +3,7 @@ class Spaceship{
   float w = 20;
   float h = 20;
   PImage img;
-  
+  int score;
   //We are basically using a mover-class here, though as it is the only object with this functionality we will just implement it directly
   //ALSO REMEMBER: COMPOSITION OVER INHERITANCE
   PVector location;
