@@ -63,6 +63,7 @@ class Spaceship{
   void draw(){
     //The spaceship will be some certain width and height.
     pushMatrix();
+      fill(255);
       //We translate to the center of the space ship
       translate(location.x+w/2, location.y+h/2);
       // We rotate the given angle
