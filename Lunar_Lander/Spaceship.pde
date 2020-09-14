@@ -1,3 +1,4 @@
+//This is just the blueprint for the spaceship class DONE
 class Spaceship{
   float w = 20;
   float h = 20;
