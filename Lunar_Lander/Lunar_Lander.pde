@@ -28,7 +28,7 @@ void setup() {
   s = new Spaceship();
   surf = new Surface("data/level"+str(levelI)+".txt");
   background = new StarryBackground(new PVector());
-  dustCloud = new DustyLanding(new PVector(0,0));
+  dustCloud = new DustyLanding();
   closeCam = new Camera();
 }
 
@@ -57,6 +57,7 @@ void update() {
       surf = new Surface("data/level"+str(levelI)+".txt");
     }
     s.reset();
+    dustCloud = new DustyLanding();
   }
 }
 void draw(){
@@ -112,6 +113,7 @@ void mousePressed() {
     if (gameStarted && !s.alive) {
       //Restart the game by resetting all the values.
       s = new Spaceship();
+      dustCloud = new DustyLanding();
       timeTakenLevel = millis()/1000;
     } else {
       gameStarted = true;
