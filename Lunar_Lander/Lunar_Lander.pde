@@ -16,6 +16,7 @@ int numLevels = 1;
 Spaceship s;
 Surface surf;
 boolean gameStarted = false;
+int timeTakenLevel = 0;
 StarryBackground background;
 //Ready to be used/spawned at spaceship death
 ShipFragments shipDestroyed;
@@ -104,7 +105,7 @@ void textField() {
   textSize(20);
   text("Score: " + s.score, 20, 50);
   text("Fuel: " + s.fuel, 20, 75);
-  text("Time: " + round(frameCount/frameRate), 20, 100);
+  text("Time: " + round(millis()/1000-timeTakenLevel), 20, 100);
   text("Altitude: " + round(s.distToSurf), 450, 50);
   text("Horizontal Speed: " + round(s.velocity.x*100), 450, 75); //times 100 so the values aren't crazy small
   text("Vertical Speed: " + round(s.velocity.y*100), 450, 100);
