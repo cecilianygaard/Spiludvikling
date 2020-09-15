@@ -1,8 +1,8 @@
 //This is just the blueprint for the spaceship class DONE
-class Spaceship{
+class Spaceship {
   boolean alive = true;
   boolean landed = false;
-  
+
   float w = 20;
   float h = 20;
   PImage img;
@@ -20,19 +20,47 @@ class Spaceship{
   float burnerPower = -0.01;
   //I HAVE CHANGED THE VALUE FOR DEVELOPMENT PURPOSES
   float fuel = 2000;
-  
+
   //DIST TO SURFACE WILL BE UPDATED BY SURFACE'S COLLISION METHOD.
   float distToSurf = 0;
-  
+
   //Controls
   boolean burnersApplied = false;
   boolean rotatingRight = false;
   boolean rotatingLeft = false;
   
-  Spaceship(){
-    location = new PVector(width/2,0);
-    velocity = new PVector(0,0);
-    acceleration = new PVector(0,0);
+  float cell = w/5;
+  PVector[][] spaceShapes = { //Main body
+                           {new PVector(-0.5*cell, 0.5*cell), 
+                            new PVector(0.5*cell, 0.5*cell), 
+                            new PVector(1.5*cell, -0.5*cell), 
+                            new PVector(1.5*cell, -1.5*cell), 
+                            new PVector(0.5*cell, -2.5*cell), 
+                            new PVector(-0.5*cell, -2.5*cell), 
+                            new PVector(-1.5*cell, -1.5*cell), 
+                            new PVector(-1.5*cell, -0.5*cell), 
+                            new PVector(-0.5*cell, 0.5*cell)}, 
+                            //Burner
+                           {new PVector(-0.5*cell, 0.5*cell), 
+                            new PVector(0.5*cell, 0.5*cell), 
+                            new PVector(1*cell, 2.5*cell), 
+                            new PVector(-1*cell, 2.5*cell), 
+                            new PVector(-0.5*cell, 0.5*cell)},
+                            //Left leg
+                           {new PVector(-0.5*cell, 0.5*cell), 
+                            new PVector(-2*cell, 2.5*cell),
+                            new PVector(-2.5*cell, 2.5*cell),
+                            new PVector(-1.5*cell, 2.5*cell)},
+                            //Right leg
+                           {new PVector(0.5*cell, 0.5*cell), 
+                            new PVector(2*cell, 2.5*cell),
+                            new PVector(2.5*cell, 2.5*cell),
+                            new PVector(1.5*cell, 2.5*cell)}};
+
+  Spaceship() {
+    location = new PVector(width/2, 0);
+    velocity = new PVector(0, 0);
+    acceleration = new PVector(0, 0);
     img = loadImage("Spaceship.png");
   }
 
@@ -67,27 +95,27 @@ class Spaceship{
     }
   }
 
-  void reset(){
+  void reset() {
     //TIME WOULD NEED TO BE RESET AS WELL FOR CALCULATING THE POINTS
     timeTakenLevel = millis()/1000;
-    location = new PVector(width/2,0);
-    velocity = new PVector(0,0);
+    location = new PVector(width/2, 0);
+    velocity = new PVector(0, 0);
     landed = false;
   }
 
   void update() {
-    if(!landed && alive){
+    if (!landed && alive) {
       //Controls that control rotation and stuff
-      if(burnersApplied){
+      if (burnersApplied) {
         this.applyBurners();
       }
-      if(rotatingLeft){
+      if (rotatingLeft) {
         this.rotateLeft();
       }
-      if(rotatingRight){
+      if (rotatingRight) {
         this.rotateRight();
       }
-      
+
       //Gravity will always be applied.
       this.applyGravity();
       //Standard mechanics, thanks NEWTON
@@ -95,44 +123,54 @@ class Spaceship{
       location.add(velocity);
       //We clear the acceleration
       acceleration.mult(0);
-    }else if(!alive){
+    } else if (!alive) {
       println("AHH U DIED");
-    }else if(landed){
+    } else if (landed) {
       println("WUHUUU YOU LANDED SUCCESSFULLY");
-      
     }
   }
-  
+
   void givePoints(LandingPlatform platform) {
     score += 500*platform.point/(millis()/1000-timeTakenLevel);
   }
-  
+
   void draw() {
     //The spaceship will be some certain width and height.
     push();
-      //We translate to the center of the space ship
-      translate(location.x, location.y);
-      // We rotate the given angle
-      rotate(angle);
-      imageMode(CENTER);
-      image(img,0,0);
-      if (burnersApplied) {
-        if (frameCount%8>4) {
-          fill(255, 0, 0);
-          triangle(w/2, h/2, -w/2, h/2, 0, h/2+25);
-          fill(255, 128, 0);
-          triangle(w/2-2.5, h/2, -w/2+2.5, h/2, 0, h/2+15);
-          fill(255, 255, 0);
-          triangle(w/2-5, h/2, -w/2+5, h/2, 0, h/2+7.5);
-        } else {
-          fill(255, 0, 0);
-          triangle(w/2, h/2, -w/2, h/2, 0, h/2+20);
-          fill(255, 128, 0);
-          triangle(w/2-2.5, h/2, -w/2+2.5, h/2, 0, h/2+10);
-          fill(255, 255, 0);
-          triangle(w/2-5, h/2, -w/2+5, h/2, 0, h/2+5);
-        }
+    //We translate to the center of the space ship
+    translate(location.x, location.y);
+    // We rotate the given angle
+    rotate(angle);
+    //imageMode(CENTER);
+    //image(img, 0, 0);
+    //DRAWING THE SHAPE
+    stroke(255);
+    beginShape(LINES);
+    for (int i = 0; i < spaceShapes.length; i++) {
+      for (int ii = 0; ii < spaceShapes[i].length-1; ii++) {
+        vertex(spaceShapes[i][ii].x, spaceShapes[i][ii].y);
+        vertex(spaceShapes[i][ii+1].x, spaceShapes[i][ii+1].y);
       }
+    }
+    endShape();
+    stroke(0,0);
+    if (burnersApplied) {
+      if (frameCount%8>4) {
+        fill(255, 0, 0);
+        triangle(cell, h/2, -cell, h/2, 0, h/2+25);
+        fill(255, 128, 0);
+        triangle(cell-cell/5, h/2, -cell+cell/5, h/2, 0, h/2+15);
+        fill(255, 255, 0);
+        triangle(cell-cell/4, h/2, -cell+cell/4, h/2, 0, h/2+7.5);
+      } else {
+        fill(255, 0, 0);
+        triangle(cell, h/2, -cell, h/2, 0, h/2+20);
+        fill(255, 128, 0);
+        triangle(cell-cell/5, h/2, -cell+cell/5, h/2, 0, h/2+10);
+        fill(255, 255, 0);
+        triangle(cell-cell/4, h/2, -cell+cell/4, h/2, 0, h/2+5);
+      }
+    }
     pop();
   }
 }

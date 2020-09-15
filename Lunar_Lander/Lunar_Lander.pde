@@ -1,25 +1,14 @@
-/*
-OK SO WHAT ARE WE MISSING:
- - Endscreen CHECK
- - Show endscreen at death. CHECK
-   - UPDATE TEXT
- - Calculate points
- - Spawn shipfragments at death. CHECK
- - Dust
- - Multiple levels SUPPORT HAS BEEN ADDED NOW ONLY LACKING THE ACTUAL LEVELS
- - New spaceship + shipframents.
- */
 int levelI = 0;
 int numLevels = 1;
+int distToSurfZoom = 200;
+int timeTakenLevel = 0;
+boolean gameStarted = false;
+
 Spaceship s;
 Surface surf;
-boolean gameStarted = false;
-int timeTakenLevel = 0;
 StarryBackground background;
-//Ready to be used/spawned at spaceship death
 ShipFragments shipDestroyed;
 Camera closeCam;
-int distToSurfZoom = 200;
 DustyLanding dustCloud;
 
 void setup() {
@@ -35,15 +24,14 @@ void setup() {
 void update() {
   s.update();
   surf.collisionSpaceship(s);
-  if(s.distToSurf <= distToSurfZoom){
+  if (s.distToSurf <= distToSurfZoom) {
     closeCam.update(s);
-    if(s.burnersApplied){
+    if (s.burnersApplied) {
       dustCloud.origin = new PVector(s.location.x, s.location.y+s.distToSurf);
-      for(int i = 0; i < int(distToSurfZoom/s.distToSurf);i++){
+      for (int i = 0; i < int(distToSurfZoom/s.distToSurf); i++) {
         dustCloud.addParticle();
       }
     }
-    
   }
 
   if (s.landed) {
@@ -58,11 +46,12 @@ void update() {
     dustCloud = new DustyLanding();
   }
 }
-void draw(){
+
+void draw() {
   if (gameStarted && s.alive) {
     update();
     push();
-    if(s.distToSurf <= distToSurfZoom){
+    if (s.distToSurf <= distToSurfZoom) {
       scale(closeCam.zoom);
       translate(-closeCam.transX, -closeCam.transY);
     }
@@ -135,7 +124,6 @@ void textField() {
 
 void startScreen() {
   push();
-
   background(0);
   background.run();
   surf.draw();
