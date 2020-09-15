@@ -6,7 +6,7 @@ class Spaceship{
   float w = 20;
   float h = 20;
   PImage img;
-  int score;
+  float score;
   //We are basically using a mover-class here, though as it is the only object with this functionality we will just implement it directly
   //ALSO REMEMBER: COMPOSITION OVER INHERITANCE
   PVector location;
@@ -69,9 +69,10 @@ class Spaceship{
 
   void reset(){
     //TIME WOULD NEED TO BE RESET AS WELL FOR CALCULATING THE POINTS
+    timeTakenLevel = millis()/1000;
     location = new PVector(width/2,0);
     velocity = new PVector(0,0);
-    s.landed = false;
+    landed = false;
   }
 
   void update() {
@@ -100,6 +101,10 @@ class Spaceship{
       println("WUHUUU YOU LANDED SUCCESSFULLY");
       
     }
+  }
+  
+  void givePoints(LandingPlatform platform) {
+    score += 500*platform.point/(millis()/1000-timeTakenLevel);
   }
   
   void draw() {
