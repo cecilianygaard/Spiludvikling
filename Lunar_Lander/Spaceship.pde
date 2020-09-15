@@ -5,7 +5,7 @@ class Spaceship {
 
   float w = 20;
   float h = 20;
-  PImage img;
+  
   float score;
   //We are basically using a mover-class here, though as it is the only object with this functionality we will just implement it directly
   //ALSO REMEMBER: COMPOSITION OVER INHERITANCE
@@ -61,7 +61,6 @@ class Spaceship {
     location = new PVector(width/2, 0);
     velocity = new PVector(0, 0);
     acceleration = new PVector(0, 0);
-    img = loadImage("Spaceship.png");
   }
 
   void rotateLeft() {
@@ -141,8 +140,6 @@ class Spaceship {
     translate(location.x, location.y);
     // We rotate the given angle
     rotate(angle);
-    //imageMode(CENTER);
-    //image(img, 0, 0);
     //DRAWING THE SHAPE
     stroke(255);
     beginShape(LINES);
