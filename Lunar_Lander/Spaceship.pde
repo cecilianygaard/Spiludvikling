@@ -67,7 +67,12 @@ class Spaceship{
     }
   }
 
-
+  void reset(){
+    //TIME WOULD NEED TO BE RESET AS WELL FOR CALCULATING THE POINTS
+    location = new PVector(width/2,0);
+    velocity = new PVector(0,0);
+    s.landed = false;
+  }
 
   void update() {
     if(!landed && alive){
@@ -93,35 +98,36 @@ class Spaceship{
       println("AHH U DIED");
     }else if(landed){
       println("WUHUUU YOU LANDED SUCCESSFULLY");
+      
     }
   }
 
   void draw() {
     //The spaceship will be some certain width and height.
-    pushMatrix();
-    //We translate to the center of the space ship
-    translate(location.x, location.y);
-    // We rotate the given angle
-    rotate(angle);
-    imageMode(CENTER);
-    image(img,0,0);
-    if (burnersApplied) {
-      if (frameCount%8>4) {
-        fill(255, 0, 0);
-        triangle(w/2, h/2, -w/2, h/2, 0, h/2+25);
-        fill(255, 128, 0);
-        triangle(w/2-2.5, h/2, -w/2+2.5, h/2, 0, h/2+15);
-        fill(255, 255, 0);
-        triangle(w/2-5, h/2, -w/2+5, h/2, 0, h/2+7.5);
-      } else {
-        fill(255, 0, 0);
-        triangle(w/2, h/2, -w/2, h/2, 0, h/2+20);
-        fill(255, 128, 0);
-        triangle(w/2-2.5, h/2, -w/2+2.5, h/2, 0, h/2+10);
-        fill(255, 255, 0);
-        triangle(w/2-5, h/2, -w/2+5, h/2, 0, h/2+5);
+    push();
+      //We translate to the center of the space ship
+      translate(location.x, location.y);
+      // We rotate the given angle
+      rotate(angle);
+      imageMode(CENTER);
+      image(img,0,0);
+      if (burnersApplied) {
+        if (frameCount%8>4) {
+          fill(255, 0, 0);
+          triangle(w/2, h/2, -w/2, h/2, 0, h/2+25);
+          fill(255, 128, 0);
+          triangle(w/2-2.5, h/2, -w/2+2.5, h/2, 0, h/2+15);
+          fill(255, 255, 0);
+          triangle(w/2-5, h/2, -w/2+5, h/2, 0, h/2+7.5);
+        } else {
+          fill(255, 0, 0);
+          triangle(w/2, h/2, -w/2, h/2, 0, h/2+20);
+          fill(255, 128, 0);
+          triangle(w/2-2.5, h/2, -w/2+2.5, h/2, 0, h/2+10);
+          fill(255, 255, 0);
+          triangle(w/2-5, h/2, -w/2+5, h/2, 0, h/2+5);
+        }
       }
-    }
-    popMatrix();
+    pop();
   }
 }
