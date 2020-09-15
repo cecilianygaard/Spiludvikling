@@ -49,10 +49,8 @@ void update() {
   if (s.landed) {
     //WE HAVE TO CALCULATE THE POINTS HERE AS WELL AND RESET TIME AND STUFF
     if (levelI < numLevels-1) {
-      print("LEVEL NYT");
       surf = new Surface("data/level"+str(levelI)+".txt");
     } else {
-      print("LEVEL NYT");
       levelI = 0;
       surf = new Surface("data/level"+str(levelI)+".txt");
     }
