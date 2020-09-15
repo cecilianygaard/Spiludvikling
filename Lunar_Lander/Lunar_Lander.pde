@@ -145,7 +145,9 @@ void endScreen() {
   textSize(32);
   textAlign(CENTER);
   fill(255);
-  text("Lunar Lander", width/2, 100);
+  text("Game Over", width/2, 100);
+  textSize(20);
+  text("Your total score was: " + s.score, width/2, 150);
   rectMode(CENTER);
   if (mouseX<width/2+50 && mouseX>width/2-50 && mouseY<height/2+20 && mouseY>height/2-20) {
     fill(155);
@@ -153,6 +155,6 @@ void endScreen() {
   rect(width/2, height/2, 100, 40);
   fill(0);
   textSize(15);
-  text("Start Game", width/2, height/2+5);
+  text("Restart", width/2, height/2+5);
   pop();
 }
