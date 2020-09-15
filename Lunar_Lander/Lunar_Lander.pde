@@ -72,11 +72,11 @@ void draw() {
 //MAKE IT SO THAT THE ROTATION IS CONSTANT AND DOESN'T NEED CONSECUTIVE PRESSES
 void keyPressed() {
   if (gameStarted && s.alive) {
-    if (key == 'w') {
+    if (key == 'w' || keyCode == UP) {
       s.burnersApplied = true;
-    } else if (key == 'd') {
+    } else if (key == 'd' || keyCode == RIGHT) {
       s.rotatingRight = true;
-    } else if (key == 'a') {
+    } else if (key == 'a' || keyCode == LEFT) {
       s.rotatingLeft = true;
     }
   }
@@ -84,11 +84,11 @@ void keyPressed() {
 
 void keyReleased() {
   if (gameStarted && s.alive) {
-    if (key == 'w') {
+    if (key == 'w' || keyCode == UP) {
       s.burnersApplied = false;
-    } else if (key == 'd') {
+    } else if (key == 'd' || keyCode == RIGHT) {
       s.rotatingRight = false;
-    } else if (key == 'a') {
+    } else if (key == 'a' || keyCode == LEFT) {
       s.rotatingLeft = false;
     }
   }

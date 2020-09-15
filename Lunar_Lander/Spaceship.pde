@@ -58,8 +58,8 @@ class Spaceship {
                             new PVector(1.5*cell, 2.5*cell)}};
 
   Spaceship() {
-    location = new PVector(width/2, 0);
-    velocity = new PVector(0, 0);
+    location = new PVector(0, height/5);
+    velocity = new PVector(0.7, 0.02);
     acceleration = new PVector(0, 0);
   }
 
@@ -97,8 +97,8 @@ class Spaceship {
   void reset() {
     //TIME WOULD NEED TO BE RESET AS WELL FOR CALCULATING THE POINTS
     timeTakenLevel = millis()/1000;
-    location = new PVector(width/2, 0);
-    velocity = new PVector(0, 0);
+    location = new PVector(0, height/5);
+    velocity = new PVector(0.7, 0.02);
     landed = false;
   }
 
