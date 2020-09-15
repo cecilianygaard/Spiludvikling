@@ -101,7 +101,7 @@ class Spaceship{
       
     }
   }
-
+  
   void draw() {
     //The spaceship will be some certain width and height.
     push();
