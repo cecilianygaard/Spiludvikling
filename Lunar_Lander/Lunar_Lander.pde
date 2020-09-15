@@ -9,8 +9,6 @@ OK SO WHAT ARE WE MISSING:
  - Multiple levels SUPPORT HAS BEEN ADDED NOW ONLY LACKING THE ACTUAL LEVELS
  - New spaceship + shipframents.
  */
-
-
 int levelI = 0;
 int numLevels = 1;
 Spaceship s;
@@ -20,6 +18,8 @@ int timeTakenLevel = 0;
 StarryBackground background;
 //Ready to be used/spawned at spaceship death
 ShipFragments shipDestroyed;
+Camera closeCam;
+int distToSurfZoom = 200;
 
 void setup() {
   size(700, 700);
@@ -27,11 +27,15 @@ void setup() {
   s = new Spaceship();
   surf = new Surface("data/level"+str(levelI)+".txt");
   background = new StarryBackground(new PVector());
+  closeCam = new Camera();
 }
 
 void update() {
   s.update();
   surf.collisionSpaceship(s);
+  if(s.distToSurf <= distToSurfZoom){
+    closeCam.update(s);
+  }
 
   if (s.landed) {
     //WE HAVE TO CALCULATE THE POINTS HERE AS WELL AND RESET TIME AND STUFF
@@ -50,10 +54,16 @@ void update() {
 void draw() {
   if (gameStarted && s.alive) {
     update();
+    push();
+    if(s.distToSurf <= distToSurfZoom){
+      scale(closeCam.zoom);
+      translate(-closeCam.transX, -closeCam.transY);
+    }
     background(0);
     background.run();
     surf.draw();
     s.draw();
+    pop();
     textField();
   } else if (!s.alive) {
     endScreen();
@@ -88,6 +98,7 @@ void keyReleased() {
 }
 
 void mousePressed() {
+
   if (mouseX<width/2+50 && mouseX>width/2-50 && mouseY<height/2+20 && mouseY>height/2-20) {
     if (gameStarted && !s.alive) {
       //Restart the game by resetting all the values.
