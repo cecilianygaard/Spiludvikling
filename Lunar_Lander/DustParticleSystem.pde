@@ -43,9 +43,6 @@ class DustParticle implements Particle{
 class DustyLanding extends ParticleSystem{
   DustyLanding(PVector location){
     super(location);
-    for (int i = 0; i < 20; i++){
-      addParticle();
-    }
   }
    void addParticle(){
      PVector v = new PVector(random(-0.4,0.4),random(-0.2,0));

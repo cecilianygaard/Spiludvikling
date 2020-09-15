@@ -20,6 +20,7 @@ StarryBackground background;
 ShipFragments shipDestroyed;
 Camera closeCam;
 int distToSurfZoom = 200;
+DustyLanding dustCloud;
 
 void setup() {
   size(700, 700);
@@ -27,6 +28,7 @@ void setup() {
   s = new Spaceship();
   surf = new Surface("data/level"+str(levelI)+".txt");
   background = new StarryBackground(new PVector());
+  dustCloud = new DustyLanding(new PVector(0,0));
   closeCam = new Camera();
 }
 
@@ -35,6 +37,13 @@ void update() {
   surf.collisionSpaceship(s);
   if(s.distToSurf <= distToSurfZoom){
     closeCam.update(s);
+    if(s.burnersApplied){
+      dustCloud.origin = new PVector(s.location.x, s.location.y+s.distToSurf);
+      for(int i = 0; i < int(distToSurfZoom/s.distToSurf);i++){
+        dustCloud.addParticle();
+      }
+    }
+    
   }
 
   if (s.landed) {
@@ -50,8 +59,7 @@ void update() {
     s.reset();
   }
 }
-
-void draw() {
+void draw(){
   if (gameStarted && s.alive) {
     update();
     push();
@@ -62,6 +70,7 @@ void draw() {
     background(0);
     background.run();
     surf.draw();
+    dustCloud.run();
     s.draw();
     pop();
     textField();
