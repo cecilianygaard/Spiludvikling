@@ -102,7 +102,7 @@ class Spaceship{
       
     }
   }
-
+  
   void givePoints(LandingPlatform platform) {
     score += 500*platform.point/(millis()/1000-timeTakenLevel);
   }
