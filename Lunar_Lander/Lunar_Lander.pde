@@ -112,6 +112,7 @@ void mousePressed() {
     if (gameStarted && !s.alive) {
       //Restart the game by resetting all the values.
       s = new Spaceship();
+      timeTakenLevel = millis()/1000;
     } else {
       gameStarted = true;
     }
