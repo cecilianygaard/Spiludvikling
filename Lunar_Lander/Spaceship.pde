@@ -69,9 +69,10 @@ class Spaceship{
 
   void reset(){
     //TIME WOULD NEED TO BE RESET AS WELL FOR CALCULATING THE POINTS
+    timeTakenLevel = millis()/1000;
     location = new PVector(width/2,0);
     velocity = new PVector(0,0);
-    s.landed = false;
+    landed = false;
   }
 
   void update() {
