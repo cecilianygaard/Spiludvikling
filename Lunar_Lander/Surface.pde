@@ -107,10 +107,10 @@ class Surface {
             LandingPlatform platform = spaceshipWithinLandingPlatform(point);
             if (platform == null) {//If it hasn't hit the platform
               s.alive = false;
-              shipDestroyed = new ShipFragments(s.location);
+              shipDestroyed = new ShipFragments(s.location, s.velocity);
             } else if (s.velocity.y >= 0.2 || (s.angle%(2*PI) < (2*PI-1) && s.angle%(2*PI-1) > 1) || (s.angle%(2*PI) < -1 && s.angle%(2*PI) > (-2*PI+1))) {//If it has hit the platform, but the angle or the y-velocity wasn't "correct"
               s.alive = false;
-              shipDestroyed = new ShipFragments(s.location);
+              shipDestroyed = new ShipFragments(s.location, s.velocity);
             } else if (!s.landed) {//By exclusion if the above weren't true then it must have landed successfully!!!!
               s.landed = true;
               s.givePoints(platform);
