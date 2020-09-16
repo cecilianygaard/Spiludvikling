@@ -167,8 +167,8 @@ void startScreen() {
   fill(255);
   textSize(20);
   text("↑  or W to apply burners",150,200);
-  text("← or A to rotate right",550,175);
-  text("→ or D to rotate left  ",550,225);
+  text("← or A to rotate left  ",550,175);
+  text("→ or D to rotate right",550,225);
   
   pop();
 }
