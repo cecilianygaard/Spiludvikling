@@ -26,6 +26,7 @@ class ShipParticle implements Particle {
     translate(location.x, location.y);
     rotate(angle);
     stroke(255);
+    fill(0);
     beginShape();
     for (int i = 0; i < shape.length-1; i++) {
       vertex(shape[i].x, shape[i].y);

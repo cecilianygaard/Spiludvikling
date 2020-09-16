@@ -24,12 +24,16 @@ void setup() {
 void update() {
   s.update();
   surf.collisionSpaceship(s);
+  dustCloud.calculateOriginActually(s, surf);
   if (s.distToSurf <= distToSurfZoom) {
     closeCam.update(s);
     if (s.burnersApplied) {
-      dustCloud.updateOrigin(s.location.x, s.location.y+s.distToSurf);
-      for (int i = 0; i < int(distToSurfZoom/s.distToSurf); i++) {
-        dustCloud.addParticle();
+      PVector spaceshipToOrigin = PVector.sub(s.location, dustCloud.origin);
+      float distSpaceshipToOrigin = spaceshipToOrigin.mag();
+      if( distSpaceshipToOrigin < distToSurfZoom){
+        for (int i = 0; i < distSpaceshipToOrigin/distToSurfZoom; i++){
+          dustCloud.addParticle();
+        }
       }
     }
   }
