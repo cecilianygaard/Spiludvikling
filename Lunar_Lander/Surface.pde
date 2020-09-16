@@ -63,10 +63,10 @@ class Surface {
   }
 
   //Done
-  LandingPlatform spaceshipWithinLandingPlatform(Spaceship s) {
+  LandingPlatform spaceshipWithinLandingPlatform(PVector location) {
     //We go through all of these and return that which it is between, though lookout!!! we return NULL!!!!! if it is not within any landingplatform.
     for (LandingPlatform platform : platforms) {
-      if (platform.p1.x <= s.location.x && platform.p2.x >= s.location.x) {
+      if (platform.p1.x <= location.x && platform.p2.x >= location.x) {
         return platform;
       }
     }
@@ -104,7 +104,7 @@ class Surface {
         //If the point is within the boundaries of the 
         if (p1.x <= point.x && p2.x >= point.x) {
           if (pointUnderLine(point, p1, p2)) {
-            LandingPlatform platform = spaceshipWithinLandingPlatform(s);
+            LandingPlatform platform = spaceshipWithinLandingPlatform(point);
             if (platform == null) {//If it hasn't hit the platform
               s.alive = false;
               shipDestroyed = new ShipFragments(s.location);
