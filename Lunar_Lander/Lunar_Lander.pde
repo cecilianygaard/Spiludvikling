@@ -59,16 +59,7 @@ void draw() {
       scale(closeCam.zoom);
       translate(-closeCam.transX, -closeCam.transY);
     }
-    //DETTE SKAL PROPPES IND I CAMERA KLASSEN I STEDET FOR
-    if (s.location.y<height/7) {
-      translate(0, -s.location.y+height/7);
-    }
-    if (s.location.x<width/7) {
-      translate(-s.location.x+width/7, 0);
-    } else if (s.location.x>width-width/7) {
-      translate(-s.location.x+width-width/7, 0);
-    }
-    //
+    closeCam.followSpaceship(s);
     background(0);
     background.run();
     surf.draw();
