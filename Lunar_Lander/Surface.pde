@@ -14,7 +14,7 @@ class LandingPlatform {
     textAlign(RIGHT, TOP);
     fill(255);
     textSize(20);
-    text(str(point),p1.x, p1.y);
+    text(str(point)+"x",p1.x, p1.y);
     rectMode(CORNER);
     rect(p1.x, p1.y, (p2.x-p1.x), 5);
     //WE ALSO NEED TO DRAW HOW MANY POINT THIS LANDINGPLATFORM GIVES
