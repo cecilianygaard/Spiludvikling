@@ -58,17 +58,9 @@ void draw() {
     if (s.distToSurf <= distToSurfZoom) {
       scale(closeCam.zoom);
       translate(-closeCam.transX, -closeCam.transY);
+    } else {
+      closeCam.followSpaceship(s);
     }
-    //DETTE SKAL PROPPES IND I CAMERA KLASSEN I STEDET FOR
-    if (s.location.y<height/7) {
-      translate(0, -s.location.y+height/7);
-    }
-    if (s.location.x<width/7) {
-      translate(-s.location.x+width/7, 0);
-    } else if (s.location.x>width-width/7) {
-      translate(-s.location.x+width-width/7, 0);
-    }
-    //
     background(0);
     background.run();
     surf.draw();
