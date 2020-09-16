@@ -24,7 +24,7 @@ void setup() {
 void update() {
   s.update();
   surf.collisionSpaceship(s);
-  dustCloud.calculateOriginActually(s, surf);
+  dustCloud.calculateOrigin(s, surf);
   if (s.distToSurf <= distToSurfZoom) {
     closeCam.update(s);
     if (s.burnersApplied) {

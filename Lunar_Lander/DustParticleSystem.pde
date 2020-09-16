@@ -57,14 +57,7 @@ class DustyLanding extends ParticleSystem {
     origin.y = y;
   }
   
-  PVector calculateOrigin(Spaceship s){
-    PVector loc = s.location.copy();
-    PVector burnerVector = PVector.sub(s.location, s.location.copy().add(new PVector(0,-10)));
-    burnerVector.rotate(s.angle);
-    return burnerVector;
-  }
-  
-  void calculateOriginActually(Spaceship s, Surface surf){
+  void calculateOrigin(Spaceship s, Surface surf){
     //We get the burnervector.
     PVector loc = s.location.copy();
     burnerVector = PVector.sub(s.location, s.location.copy().add(new PVector(0,-10)));
