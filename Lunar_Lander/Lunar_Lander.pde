@@ -30,8 +30,8 @@ void update() {
     if (s.burnersApplied) {
       PVector spaceshipToOrigin = PVector.sub(s.location, dustCloud.origin);
       float distSpaceshipToOrigin = spaceshipToOrigin.mag();
-      if( distSpaceshipToOrigin < distToSurfZoom){
-        for (int i = 0; i < distSpaceshipToOrigin/distToSurfZoom; i++){
+      if ( distSpaceshipToOrigin < distToSurfZoom) {
+        for (int i = 0; i < distSpaceshipToOrigin/distToSurfZoom; i++) {
           dustCloud.addParticle();
         }
       }
@@ -59,6 +59,16 @@ void draw() {
       scale(closeCam.zoom);
       translate(-closeCam.transX, -closeCam.transY);
     }
+    //DETTE SKAL PROPPES IND I CAMERA KLASSEN I STEDET FOR
+    if (s.location.y<height/7) {
+      translate(0, -s.location.y+height/7);
+    }
+    if (s.location.x<width/7) {
+      translate(-s.location.x+width/7, 0);
+    } else if (s.location.x>width-width/7) {
+      translate(-s.location.x+width-width/7, 0);
+    }
+    //
     background(0);
     background.run();
     surf.draw();
