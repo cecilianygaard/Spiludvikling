@@ -58,8 +58,9 @@ void draw() {
     if (s.distToSurf <= distToSurfZoom) {
       scale(closeCam.zoom);
       translate(-closeCam.transX, -closeCam.transY);
+    } else {
+      closeCam.followSpaceship(s);
     }
-    closeCam.followSpaceship(s);
     background(0);
     background.run();
     surf.draw();
