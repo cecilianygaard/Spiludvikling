@@ -142,14 +142,15 @@ class Spaceship {
     rotate(angle);
     //DRAWING THE SHAPE
     stroke(255);
-    beginShape(LINES);
+    fill(0);
     for (int i = 0; i < spaceShapes.length; i++) {
+      beginShape();
       for (int ii = 0; ii < spaceShapes[i].length-1; ii++) {
         vertex(spaceShapes[i][ii].x, spaceShapes[i][ii].y);
         vertex(spaceShapes[i][ii+1].x, spaceShapes[i][ii+1].y);
       }
+      endShape();
     }
-    endShape();
     stroke(0,0);
     if (burnersApplied) {
       if (frameCount%8>4) {

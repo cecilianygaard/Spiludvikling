@@ -51,6 +51,11 @@ class DustyLanding extends ParticleSystem {
     particles.add(new DustParticle(origin, v));
   }
   
+  void updateOrigin(float x, float y){
+    origin.x = x;
+    origin.y = y;
+  }
+  
   void run() {
     Iterator<Particle> it = particles.iterator();
     while (it.hasNext()) {

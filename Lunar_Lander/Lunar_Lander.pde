@@ -27,7 +27,7 @@ void update() {
   if (s.distToSurf <= distToSurfZoom) {
     closeCam.update(s);
     if (s.burnersApplied) {
-      dustCloud.origin = new PVector(s.location.x, s.location.y+s.distToSurf);
+      dustCloud.updateOrigin(s.location.x, s.location.y+s.distToSurf);
       for (int i = 0; i < int(distToSurfZoom/s.distToSurf); i++) {
         dustCloud.addParticle();
       }
