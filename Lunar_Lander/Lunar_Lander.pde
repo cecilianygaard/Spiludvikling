@@ -135,7 +135,6 @@ void textField() {
   text("Vertical Speed: " + round(s.velocity.y*100), 450, 100);
   pop();
 }
-
 void startScreen() {
   push();
   background(0);
@@ -154,6 +153,23 @@ void startScreen() {
   fill(0);
   textSize(15);
   text("Start Game", width/2, height/2+5); 
+  
+  stroke(255);
+  fill(0);
+   rectMode(CENTER);
+  rect(39.5,193,20,20);
+  rect(92.5,193,20,20);
+  rect(455.5,167,20,20);
+  rect(504.5,167,20,20);
+  rect(455.5,217,20,20);
+  rect(504.5,217,20,20);
+  
+  fill(255);
+  textSize(20);
+  text("↑  or W to apply burners",150,200);
+  text("← or A to rotate right",550,175);
+  text("→ or D to rotate left  ",550,225);
+  
   pop();
 }
 
