@@ -1,5 +1,5 @@
 int levelI = 0;
-int numLevels = 2;
+int numLevels = 4;
 int distToSurfZoom = 200;
 int distToSurfDust = 100;
 int timeTakenLevel = 0;
