@@ -24,13 +24,16 @@ class Camera {
   }
 
   void followSpaceship(Spaceship s) {
-    if (s.location.y<height/7) {
-      translate(0, -s.location.y+height/7);
+    //Move camera up
+    if (s.location.y<boundaryY) {
+      translate(0, -s.location.y+boundaryY);
     }
-    if (s.location.x<width/7) {
-      translate(-s.location.x+width/7, 0);
-    } else if (s.location.x>width-width/7) {
-      translate(-s.location.x+width-width/7, 0);
+    //Move camera to the left
+    if (s.location.x<boundaryLeftX) {
+      translate(-s.location.x+boundaryLeftX, 0);
+      //Move camera to the rigth
+    } else if (s.location.x>boundaryRightX) {
+      translate(-s.location.x+boundaryRightX, 0);
     }
   }
 }

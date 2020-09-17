@@ -24,7 +24,9 @@ class LandingPlatform {
 //OKAy so modulo, how do we do?
 //
 class Surface {
+  ArrayList<PVector> originalPoints = new ArrayList<PVector>();
   ArrayList<PVector> points = new ArrayList<PVector>();  
+  ArrayList<LandingPlatform> originalPlatforms = new ArrayList<LandingPlatform>();
   ArrayList<LandingPlatform> platforms = new ArrayList<LandingPlatform>();
 
   Surface(String fileName) {
@@ -40,15 +42,56 @@ class Surface {
       //We do two at a time
       points.add(new PVector(int(pointStrings[i]), int(pointStrings[i+1])));
     }
+    //We copy the points of the level to originalPoints for later use.
+    for (PVector point : points) {
+      originalPoints.add(point.copy());
+    }
 
     //We process the pointsString
-  String[] platformStrings = platformsString.split(" ");
+    String[] platformStrings = platformsString.split(" ");
     for (int i = 0; i < platformStrings.length; i+=5) {
       //We do four at a time
       platforms.add(new LandingPlatform(int(platformStrings[i]), int(platformStrings[i+1]), int(platformStrings[i+2]), int(platformStrings[i+3]), int(platformStrings[i+4])));
     }
+    //We copy the platforms of the level to originalPlatforms for later use.
+    for (LandingPlatform platform : platforms) {
+      originalPlatforms.add(new LandingPlatform(int(platform.p1.x), int(platform.p1.y), int(platform.p2.x), int(platform.p2.y), platform.point));
+    }
   }
 
+  void replicateLevel(int direction) {
+    //Direction can be plus or minus depending on whether the level should be replicated to the right or the left of the current level.
+    float xCoorDif = points.get(points.size()-1).x - points.get(0).x;
+    //We have to make copies of the originalLists
+    ArrayList<PVector> copyOriginalPoints = new ArrayList<PVector>();
+    ArrayList<LandingPlatform> copyOriginalPlatforms = new ArrayList<LandingPlatform>();
+    //We copy the points of the level to originalPoints for later use.
+    for (PVector point : originalPoints) {
+      PVector newPoint = point.copy();
+      newPoint.x += direction*xCoorDif;
+      copyOriginalPoints.add(newPoint);
+    }
+    //We copy the platforms of the level to originalPlatforms for later use.
+    for (LandingPlatform platform : originalPlatforms) {
+      copyOriginalPlatforms.add(new LandingPlatform(int(platform.p1.x+direction*xCoorDif), int(platform.p1.y), int(platform.p2.x+direction*xCoorDif), int(platform.p2.y), platform.point));
+    }
+    //Left
+    if(direction == -1){
+      //The points
+      copyOriginalPoints.addAll(points);
+      points = copyOriginalPoints;
+      //The platforms
+      copyOriginalPlatforms.addAll(platforms);
+      platforms = copyOriginalPlatforms;
+    }//Right
+    else if(direction == 1){
+      //The points
+      points.addAll(copyOriginalPoints);
+      //The platforms
+      platforms.addAll(copyOriginalPlatforms);
+    }
+  }
+  
   //Done
   Boolean pointUnderLine(PVector point, PVector p1, PVector p2) {
     float a = (p2.y-p1.y)/(p2.x-p1.x);
@@ -129,13 +172,13 @@ class Surface {
     fill(0);
     beginShape();
     //Lefthand bottom most corner to avoid clipping
-    vertex(-10, height);
+    vertex(points.get(0).x-10, height);
     //Drawing a polygon through all the points
     for (PVector point : points) {
       vertex(point.x, point.y);
     }
     //Lefthand bottom most corner to avoid clipping
-    vertex(width+10, height);
+    vertex(points.get(points.size()-1).x+10, height);
     endShape();
     for (LandingPlatform platform : platforms) {
       platform.draw();

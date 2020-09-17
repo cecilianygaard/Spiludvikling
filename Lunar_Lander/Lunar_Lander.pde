@@ -26,6 +26,13 @@ void update() {
   s.update();
   surf.collisionSpaceship(s);
   dustCloud.calculateOrigin(s, surf);
+  
+  if (s.location.x-closeCam.boundaryLeftX <= surf.points.get(0).x){
+    surf.replicateLevel(-1);
+  }else if (s.location.x+closeCam.boundaryLeftX >= surf.points.get(surf.points.size()-1).x){
+    surf.replicateLevel(1);
+  }
+  
   if (s.distToSurf <= distToSurfZoom) {
     closeCam.update(s);
   }
