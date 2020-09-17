@@ -1,5 +1,5 @@
 int levelI = 0;
-int numLevels = 1;
+int numLevels = 2;
 int distToSurfZoom = 200;
 int distToSurfDust = 100;
 int timeTakenLevel = 0;
@@ -49,6 +49,7 @@ void update() {
   if (s.landed) {
     //WE HAVE TO CALCULATE THE POINTS HERE AS WELL AND RESET TIME AND STUFF
     if (levelI < numLevels-1) {
+      levelI++;
       surf = new Surface("data/level"+str(levelI)+".txt");
     } else {
       levelI = 0;
@@ -117,6 +118,8 @@ void mousePressed() {
       s = new Spaceship();
       dustCloud = new DustyLanding();
       timeTakenLevel = millis()/1000;
+      levelI = 0;
+      surf = new Surface("data/level"+str(levelI)+".txt");
     } else {
       gameStarted = true;
     }
