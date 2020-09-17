@@ -54,7 +54,6 @@ void update() {
 }
 
 void draw() {
-  println(s.angle%(2*PI)/PI);
   if (gameStarted && s.alive) {
     update();
     push();
