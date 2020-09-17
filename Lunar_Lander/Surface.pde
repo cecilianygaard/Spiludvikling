@@ -68,15 +68,15 @@ class Surface {
     //We copy the points of the level to originalPoints for later use.
     for (PVector point : originalPoints) {
       PVector newPoint = point.copy();
-      newPoint.x += direction*xCoorDif;
+      newPoint.x += (direction*xCoorDif)+points.get(0).x;
       copyOriginalPoints.add(newPoint);
     }
     //We copy the platforms of the level to originalPlatforms for later use.
     for (LandingPlatform platform : originalPlatforms) {
-      copyOriginalPlatforms.add(new LandingPlatform(int(platform.p1.x+direction*xCoorDif), int(platform.p1.y), int(platform.p2.x+direction*xCoorDif), int(platform.p2.y), platform.point));
+      copyOriginalPlatforms.add(new LandingPlatform(int(platform.p1.x+direction*xCoorDif+points.get(0).x), int(platform.p1.y), int(platform.p2.x+direction*xCoorDif+points.get(0).x), int(platform.p2.y), platform.point));
     }
     //Left
-    if(direction == -1){
+    if (direction == -1) {
       //The points
       copyOriginalPoints.addAll(points);
       points = copyOriginalPoints;
@@ -84,14 +84,24 @@ class Surface {
       copyOriginalPlatforms.addAll(platforms);
       platforms = copyOriginalPlatforms;
     }//Right
-    else if(direction == 1){
+    else if (direction == 1) {
+      //We copy the points of the level to originalPoints for later use.
+      for (PVector point : originalPoints) {
+        PVector newPoint = point.copy();
+        newPoint.x += direction*xCoorDif;
+        copyOriginalPoints.add(newPoint);
+      }
+      //We copy the platforms of the level to originalPlatforms for later use.
+      for (LandingPlatform platform : originalPlatforms) {
+        copyOriginalPlatforms.add(new LandingPlatform(int(platform.p1.x+direction*xCoorDif), int(platform.p1.y), int(platform.p2.x+direction*xCoorDif), int(platform.p2.y), platform.point));
+      }
       //The points
       points.addAll(copyOriginalPoints);
       //The platforms
       platforms.addAll(copyOriginalPlatforms);
     }
   }
-  
+
   //Done
   Boolean pointUnderLine(PVector point, PVector p1, PVector p2) {
     float a = (p2.y-p1.y)/(p2.x-p1.x);
