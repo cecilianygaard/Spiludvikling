@@ -3,10 +3,9 @@ String mode = "point"; //other possible mode is landing platform which would be 
 Surface surf;
 LandingPlatform platform;
 PImage background;
-int imgW = 2016;
-int imgH = 1522;
+
 void setup(){
-  size(1000, 700);
+  size(700, 700);
   surfaceText = createWriter("surface.txt");
   surf = new Surface();
   background = loadImage("background.png");
@@ -21,12 +20,9 @@ void draw(){
   background(0);
   image(background, 0,0,width, height);
   fill(255, 0, 0);
-  circle(mouseX, mouseY, 2);
+  circle(mouseX, mouseY, 5);
   noFill();
   surf.draw();
-  if(platform != null){
-    platform.draw();
-  }
   drawInfo();
 }
 
@@ -50,11 +46,9 @@ void keyPressed(){
     mode = "landing";
     platform = new LandingPlatform();
   }else if(key == 'o'){
-    if(platform!=null){
-      surf.landingPlatforms.add(platform);
-      println("PLATFORM SAVED");
-      platform = new LandingPlatform();
-    }
+    surf.landingPlatforms.add(platform);
+    println("PLATFORM SAVED");
+    platform = new LandingPlatform();
   }
   
   //We save to the file and close the file

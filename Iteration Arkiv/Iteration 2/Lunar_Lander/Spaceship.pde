@@ -72,6 +72,8 @@ class Spaceship {
   }
 
   void applyGravity() { 
+    //!!!! THIS SHOULD DEFINITELY NOT BE A MEMBERVARIABLE!!!! AS WE SHOULD USE THE SAME GRAVITY FOR THE PARTICLES OR?
+    //WHAT SHOULD GRAVITY BE?
     PVector gravity = new PVector(0, 0.0005);
     //!!!!!
     acceleration.add(gravity);
@@ -93,6 +95,7 @@ class Spaceship {
   }
 
   void reset() {
+    //TIME WOULD NEED TO BE RESET AS WELL FOR CALCULATING THE POINTS
     timeTakenLevel = millis()/1000;
     location = new PVector(0, height/5);
     velocity = new PVector(0.7, 0.02);

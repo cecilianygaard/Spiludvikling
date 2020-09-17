@@ -16,19 +16,6 @@ class LandingPlatform{
       done = true;
     }
   }
-  void draw(){
-    push();
-    if(p2.mag()>0){
-      fill(255);
-      rect(p1.x, p1.y, p2.x-p1.x, 5);
-      fill(0,0,255);
-      circle(p2.x, p2.y, 5);
-    }
-    if(p1.mag()>0){
-      circle(p1.x, p1.y, 5);
-    }
-    pop();
-  }
 }
 
 class Surface{
@@ -72,10 +59,7 @@ class Surface{
       endShape();
       fill(255, 0, 0);
       for(PVector point : points){
-          circle(point.x, point.y, 2);
-      }
-      for (LandingPlatform platform : landingPlatforms){
-        platform.draw();
+          circle(point.x, point.y, 5);
       }
     popMatrix();
   }
