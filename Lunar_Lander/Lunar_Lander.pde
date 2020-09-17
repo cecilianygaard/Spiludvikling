@@ -1,6 +1,7 @@
 int levelI = 0;
 int numLevels = 2;
 int distToSurfZoom = 200;
+int distToSurfDust = 100;
 int timeTakenLevel = 0;
 boolean gameStarted = false;
 
@@ -27,13 +28,13 @@ void update() {
   dustCloud.calculateOrigin(s, surf);
   if (s.distToSurf <= distToSurfZoom) {
     closeCam.update(s);
-    if (s.burnersApplied) {
-      PVector spaceshipToOrigin = PVector.sub(s.location, dustCloud.origin);
-      float distSpaceshipToOrigin = spaceshipToOrigin.mag();
-      if ( distSpaceshipToOrigin < distToSurfZoom) {
-        for (int i = 0; i < distSpaceshipToOrigin/distToSurfZoom; i++) {
-          dustCloud.addParticle();
-        }
+  }
+  if (s.burnersApplied) {
+    PVector spaceshipToOrigin = PVector.sub(s.location, dustCloud.origin);
+    float distSpaceshipToOrigin = spaceshipToOrigin.mag();
+    if ( distSpaceshipToOrigin < distToSurfDust) {
+      for (int i = 0; i < 2*(distSpaceshipToOrigin/distToSurfDust); i++) {
+        dustCloud.addParticle();
       }
     }
   }
@@ -53,6 +54,7 @@ void update() {
 }
 
 void draw() {
+  println(s.angle%(2*PI)/PI);
   if (gameStarted && s.alive) {
     update();
     push();

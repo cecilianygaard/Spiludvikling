@@ -14,14 +14,15 @@ class LandingPlatform {
     textAlign(RIGHT, TOP);
     fill(255);
     textSize(20);
-    text(str(point)+"x",p1.x, p1.y);
+    text(str(point)+"x", p1.x, p1.y);
     rectMode(CORNER);
     rect(p1.x, p1.y, (p2.x-p1.x), 5);
     //WE ALSO NEED TO DRAW HOW MANY POINT THIS LANDINGPLATFORM GIVES
     pop();
   }
 }
-
+//OKAy so modulo, how do we do?
+//
 class Surface {
   ArrayList<PVector> points = new ArrayList<PVector>();  
   ArrayList<LandingPlatform> platforms = new ArrayList<LandingPlatform>();
@@ -41,20 +42,20 @@ class Surface {
     }
 
     //We process the pointsString
-    String[] platformStrings = platformsString.split(" ");
+  String[] platformStrings = platformsString.split(" ");
     for (int i = 0; i < platformStrings.length; i+=5) {
       //We do four at a time
       platforms.add(new LandingPlatform(int(platformStrings[i]), int(platformStrings[i+1]), int(platformStrings[i+2]), int(platformStrings[i+3]), int(platformStrings[i+4])));
     }
   }
-  
+
   //Done
   Boolean pointUnderLine(PVector point, PVector p1, PVector p2) {
     float a = (p2.y-p1.y)/(p2.x-p1.x);
     float yCollide = p1.y + a*(point.x-p1.x);
     return yCollide <= point.y;
   }
-  
+
   //Done
   void updateDistanceToSpaceship(Spaceship s, PVector p1, PVector p2) {
     float a = (p2.y-p1.y)/(p2.x-p1.x);
