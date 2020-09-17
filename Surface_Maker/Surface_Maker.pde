@@ -5,7 +5,7 @@ LandingPlatform platform;
 PImage background;
 
 void setup(){
-  size(700, 700);
+  size(1000, 700);
   surfaceText = createWriter("surface.txt");
   surf = new Surface();
   background = loadImage("background.png");
