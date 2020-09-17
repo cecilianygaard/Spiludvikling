@@ -6,11 +6,7 @@ PImage background;
 int imgW = 2016;
 int imgH = 1522;
 void setup(){
-  //Yeah 
-  //W  = 700*(imgW/imgH) = 700*(2016/1522) = 927
-  //H  = 700*(imgH/imgW) = 700*(1522/2016) = 529
-  
-  size(927, 529);
+  size(1000, 700);
   surfaceText = createWriter("surface.txt");
   surf = new Surface();
   background = loadImage("background.png");
