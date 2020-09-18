@@ -55,7 +55,7 @@ void update() {
     PVector spaceshipToOrigin = PVector.sub(s.location, dustCloud.origin);
     float distSpaceshipToOrigin = spaceshipToOrigin.mag();
     if(!burnerSound.isPlaying()){
-      burnerSound.play();
+      burnerSound.loop();
     }
     if ( distSpaceshipToOrigin < distToSurfDust) {
       for (int i = 0; i < 2*(distSpaceshipToOrigin/distToSurfDust); i++) {
