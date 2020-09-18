@@ -128,7 +128,6 @@ void draw() {
   } else if (!s.alive) {
     if (burnerSound.isPlaying()) {
       burnerSound.pause();
-      crashSound.play();
     }
     if (beepSound.isPlaying()) {
       beepSound.pause();
