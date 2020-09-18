@@ -15,7 +15,9 @@ ShipFragments shipDestroyed;
 Camera closeCam;
 DustyLanding dustCloud;
 SoundFile burnerSound;
-SoundFile playerLand;  
+SoundFile playerLand;
+SoundFile crashSound;
+SoundFile beepSound;
 Highscore hs;
 
 void setup() {
@@ -27,7 +29,13 @@ void setup() {
   dustCloud = new DustyLanding();
   closeCam = new Camera();
   burnerSound = new SoundFile(this, "data/sound/Rocket-sound-effect.wav");
-  playerLand = new SoundFile(this, "data/sound/Ding-Sound-Effect.mp3");
+  burnerSound.amp(0.5);
+  playerLand = new SoundFile(this, "data/sound/Ding-Sound-Effect.wav");
+  playerLand.amp(0.7);
+  crashSound = new SoundFile(this, "data/sound/Rocket-crash.wav");
+  crashSound.amp(1);
+  beepSound = new SoundFile(this, "data/sound/Beep.wav");
+  beepSound.amp(0.3);
   hs = new Highscore("data/highscore.txt");
 }
 
@@ -57,7 +65,7 @@ void update() {
   if (s.burnersApplied) {
     PVector spaceshipToOrigin = PVector.sub(s.location, dustCloud.origin);
     float distSpaceshipToOrigin = spaceshipToOrigin.mag();
-    if(!burnerSound.isPlaying()){
+    if (!burnerSound.isPlaying()) {
       burnerSound.loop();
     }
     if ( distSpaceshipToOrigin < distToSurfDust) {
@@ -65,7 +73,7 @@ void update() {
         dustCloud.addParticle(spaceshipToOrigin);
       }
     }
-  }else{
+  } else {
     burnerSound.pause();
   }
 
@@ -102,23 +110,29 @@ void draw() {
     surf.draw();
     dustCloud.run();
     s.draw();
-        if(s.landed) {
+    if (s.landed) {
       push();
-    textAlign(CENTER);
-    fill(255);
-    if(!dingPlayed) {
-    playerLand.play();
-    dingPlayed = true;
-    }
-    text("Successfull landing!", s.location.x, s.location.y-100); 
-    text("Earned " + s.scoreGainedRound + " points!", s.location.x, s.location.y-75);
-    text("Press any key to continue", s.location.x, s.location.y-50);
-    pop();
+      textAlign(CENTER);
+      fill(255);
+      if (!dingPlayed) {
+        playerLand.play();
+        dingPlayed = true;
+      }
+      text("Successfull landing!", s.location.x, s.location.y-100); 
+      text("Earned " + s.scoreGainedRound + " points!", s.location.x, s.location.y-75);
+      text("Press any key to continue", s.location.x, s.location.y-50);
+      pop();
     }
     pop();
     textField();
-
   } else if (!s.alive) {
+    if (burnerSound.isPlaying()) {
+      burnerSound.pause();
+      crashSound.play();
+    }
+    if (beepSound.isPlaying()) {
+      beepSound.pause();
+    }
     if (hs.currentHighscore != s.score) {
       hs.updateHighscore(s.score);
     }

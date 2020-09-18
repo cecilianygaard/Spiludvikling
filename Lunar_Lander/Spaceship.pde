@@ -165,11 +165,13 @@ class Spaceship {
     pop();
     //Here we potentially draw the warning and make it flash with a higher frequency the more "danger" the player is in.
     //
-    if (0.02 < velocity.y+(distToSurf/velocity.y)*(3*burnerPower/5) && velocity.y > 0 && !(velocity.y <= 0.2)) {
+    if (((distToSurf < distToSurfZoom/2) && (velocity.y >= 0.2)) || (0.02 < velocity.y+(distToSurf/velocity.y)*(3*burnerPower/5) && velocity.y > 0 && !(velocity.y <= 0.2))) {
       // we pulse the warning
       if ( 0 > sin(millis()*0.009)){
         //PLAY BEEEB
-        
+        if (!beepSound.isPlaying()){
+          beepSound.loop();
+        }
         push();
         //We translate to the center of the warning box
         translate(location.x+1.5*w, location.y);
@@ -185,6 +187,8 @@ class Spaceship {
         circle(0, h/8, h/16);
         pop();
       }
+    }else{
+      beepSound.pause();
     }
   }
 }
