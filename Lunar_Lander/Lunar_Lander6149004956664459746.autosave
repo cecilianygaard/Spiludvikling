@@ -15,7 +15,7 @@ ShipFragments shipDestroyed;
 Camera closeCam;
 DustyLanding dustCloud;
 SoundFile burnerSound;
-SoundFile playerLand;  
+SoundFile playerLand;
 Highscore hs;
 
 void setup() {
