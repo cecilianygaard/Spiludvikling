@@ -5,13 +5,17 @@ class DustParticle implements Particle {
   PVector velocity;
   PVector origin;
   float lifespan;
+  float a;
+  float b;
 
   DustParticle(PVector origin_, PVector velocity_) {
     origin = origin_.copy();
     location = origin_.copy();
     velocity = velocity_.copy();
     origin = location.copy();
-    lifespan = 255.0;
+    lifespan = 200.0;
+    a = random(0.5, 3);
+    b = random(0.5, 3)-a;
   }
 
   void update() {
@@ -21,9 +25,9 @@ class DustParticle implements Particle {
 
   void draw() {
     push();
-    stroke(255, lifespan);
-    fill(255, lifespan);
-    ellipse(location.x, location.y, 1, 1);
+    stroke(200, lifespan);
+    fill(200, lifespan);
+    ellipse(location.x, location.y, a, b);
     pop();
   }
 
@@ -47,8 +51,15 @@ class DustyLanding extends ParticleSystem {
     super(new PVector(0, 0));
   }
 
-  void addParticle() {
-    PVector v = new PVector(random(-0.4, 0.4), random(-0.2, 0));
+  void addParticle(PVector burnerDir) {
+    PVector v = burnerDir.copy().normalize();
+    if (random(1) > .5){
+      v.rotate(random(-1.3, -0.6));
+    } else {
+      v.rotate(random(0.6,1.3));
+    }
+    v.mult(0.4);
+    //PVector v = new PVector(random(-0.4, 0.4), random(-0.2, 0));
     particles.add(new DustParticle(origin, v));
   }
 
@@ -87,7 +98,7 @@ class DustyLanding extends ParticleSystem {
       if (withinX && withinY) {
         //Is the point of intersection in the direction of the burner?
         boolean burnerPointingLeft = (s.angle%(2*PI)<-PI && s.angle%(2*PI)>(-2*PI)) || (s.angle%(2*PI)<PI && s.angle%(2*PI)>0); 
-        if ((burnerPointingLeft && xIntersect <= s.location.x) || (!burnerPointingLeft && xIntersect >= s.location.x)){
+        if ((burnerPointingLeft && xIntersect <= s.location.x) || (!burnerPointingLeft && xIntersect >= s.location.x)) {
           //If all these are fulfilled we look at the distance if the distance is shorter than the current vector we make it the newOrigin
           origin.x = xIntersect;
           origin.y = yIntersect;

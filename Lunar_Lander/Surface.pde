@@ -62,7 +62,6 @@ class Surface {
   void replicateLevel(int direction) {
     //Direction can be plus or minus depending on whether the level should be replicated to the right or the left of the current level.
     float xCoorDif = points.get(points.size()-1).x - points.get(0).x;
-    float lastXCoor = points.get(points.size()-1).x;
     //We have to make copies of the originalLists
     ArrayList<PVector> copyOriginalPoints = new ArrayList<PVector>();
     ArrayList<LandingPlatform> copyOriginalPlatforms = new ArrayList<LandingPlatform>();

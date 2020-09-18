@@ -51,7 +51,7 @@ void update() {
     float distSpaceshipToOrigin = spaceshipToOrigin.mag();
     if ( distSpaceshipToOrigin < distToSurfDust) {
       for (int i = 0; i < 2*(distSpaceshipToOrigin/distToSurfDust); i++) {
-        dustCloud.addParticle();
+        dustCloud.addParticle(spaceshipToOrigin);
       }
     }
   }
