@@ -5,7 +5,7 @@ class Spaceship {
 
   float w = 20;
   float h = 20;
-  
+
   int score;
   //We are basically using a mover-class here, though as it is the only object with this functionality we will just implement it directly
   //ALSO REMEMBER: COMPOSITION OVER INHERITANCE
@@ -28,34 +28,34 @@ class Spaceship {
   boolean burnersApplied = false;
   boolean rotatingRight = false;
   boolean rotatingLeft = false;
-  
+
   float cell = w/5;
   PVector[][] spaceShapes = { //Main body
-                           {new PVector(-0.5*cell, 0.5*cell), 
-                            new PVector(0.5*cell, 0.5*cell), 
-                            new PVector(1.5*cell, -0.5*cell), 
-                            new PVector(1.5*cell, -1.5*cell), 
-                            new PVector(0.5*cell, -2.5*cell), 
-                            new PVector(-0.5*cell, -2.5*cell), 
-                            new PVector(-1.5*cell, -1.5*cell), 
-                            new PVector(-1.5*cell, -0.5*cell), 
-                            new PVector(-0.5*cell, 0.5*cell)}, 
-                            //Burner
-                           {new PVector(-0.5*cell, 0.5*cell), 
-                            new PVector(0.5*cell, 0.5*cell), 
-                            new PVector(1*cell, 2.5*cell), 
-                            new PVector(-1*cell, 2.5*cell), 
-                            new PVector(-0.5*cell, 0.5*cell)},
-                            //Left leg
-                           {new PVector(-0.5*cell, 0.5*cell), 
-                            new PVector(-2*cell, 2.5*cell),
-                            new PVector(-2.5*cell, 2.5*cell),
-                            new PVector(-1.5*cell, 2.5*cell)},
-                            //Right leg
-                           {new PVector(0.5*cell, 0.5*cell), 
-                            new PVector(2*cell, 2.5*cell),
-                            new PVector(2.5*cell, 2.5*cell),
-                            new PVector(1.5*cell, 2.5*cell)}};
+    {new PVector(-0.5*cell, 0.5*cell), 
+      new PVector(0.5*cell, 0.5*cell), 
+      new PVector(1.5*cell, -0.5*cell), 
+      new PVector(1.5*cell, -1.5*cell), 
+      new PVector(0.5*cell, -2.5*cell), 
+      new PVector(-0.5*cell, -2.5*cell), 
+      new PVector(-1.5*cell, -1.5*cell), 
+      new PVector(-1.5*cell, -0.5*cell), 
+      new PVector(-0.5*cell, 0.5*cell)}, 
+    //Burner
+    {new PVector(-0.5*cell, 0.5*cell), 
+      new PVector(0.5*cell, 0.5*cell), 
+      new PVector(1*cell, 2.5*cell), 
+      new PVector(-1*cell, 2.5*cell), 
+      new PVector(-0.5*cell, 0.5*cell)}, 
+    //Left leg
+    {new PVector(-0.5*cell, 0.5*cell), 
+      new PVector(-2*cell, 2.5*cell), 
+      new PVector(-2.5*cell, 2.5*cell), 
+      new PVector(-1.5*cell, 2.5*cell)}, 
+    //Right leg
+    {new PVector(0.5*cell, 0.5*cell), 
+      new PVector(2*cell, 2.5*cell), 
+      new PVector(2.5*cell, 2.5*cell), 
+      new PVector(1.5*cell, 2.5*cell)}};
 
   Spaceship() {
     location = new PVector(0, height/5);
@@ -148,7 +148,7 @@ class Spaceship {
       }
       endShape();
     }
-    stroke(0,0);
+    stroke(0, 0);
     if (burnersApplied) {
       if (frameCount%8>4) {
         fill(255, 0, 0);
@@ -167,5 +167,28 @@ class Spaceship {
       }
     }
     pop();
+    //Here we potentially draw the warning and make it flash with a higher frequency the more "danger" the player is in.
+    //
+    if (0.02 < velocity.y+(distToSurf/velocity.y)*(3*burnerPower/5) && velocity.y > 0 && !(velocity.y <= 0.2)) {
+      // we pulse the warning
+      if ( 0 > sin(millis()*0.009)){
+        //PLAY BEEEB
+        
+        push();
+        //We translate to the center of the warning box
+        translate(location.x+1.5*w, location.y);
+        rectMode(CENTER);
+        stroke(255, 0, 0);
+        strokeWeight(2);
+        fill(0, 0);
+        rect(0, 0, w/2, h/2, w/20);
+        //The exclamation mark
+        strokeWeight(1);
+        fill(255, 0,0);
+        triangle(0, 0, -w/16, -h/8, w/16, -h/8);
+        circle(0, h/8, h/16);
+        pop();
+      }
+    }
   }
 }
