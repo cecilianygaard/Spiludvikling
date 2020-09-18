@@ -1,16 +1,19 @@
+import processing.sound.*;
+
 int levelI = 0;
 int numLevels = 4;
 int distToSurfZoom = 200;
 int distToSurfDust = 150;
 int timeTakenLevel = 0;
 boolean gameStarted = false;
-
+boolean paused = false;
 Spaceship s;
 Surface surf;
 StarryBackground background;
 ShipFragments shipDestroyed;
 Camera closeCam;
 DustyLanding dustCloud;
+SoundFile burnerSound
 Highscore hs;
 
 void setup() {
@@ -21,6 +24,7 @@ void setup() {
   background = new StarryBackground(new PVector());
   dustCloud = new DustyLanding();
   closeCam = new Camera();
+  burnerSound = new SoundFile(this,"Rocket-sound-effect.wav");
   hs = new Highscore("data/highscore.txt");
 }
 
@@ -50,6 +54,7 @@ void update() {
   if (s.burnersApplied) {
     PVector spaceshipToOrigin = PVector.sub(s.location, dustCloud.origin);
     float distSpaceshipToOrigin = spaceshipToOrigin.mag();
+    burnerSound.play();
     if ( distSpaceshipToOrigin < distToSurfDust) {
       for (int i = 0; i < 2*(distSpaceshipToOrigin/distToSurfDust); i++) {
         dustCloud.addParticle(spaceshipToOrigin);
@@ -108,6 +113,18 @@ void keyPressed() {
     } else if (key == 'a' || keyCode == LEFT) {
       s.rotatingLeft = true;
     }
+  }
+  if(key == ' ' && !paused && gameStarted && s.alive) {
+    noLoop();
+    push();
+    textSize(32);
+    textAlign(CENTER);
+    text("Game Paused", width/2, 150);
+    pop();
+    paused = true;
+  } else if(key == ' ') {
+        loop();
+        paused = false;
   }
 }
 
@@ -174,8 +191,8 @@ void startScreen() {
   stroke(255);
   fill(0);
   rectMode(CENTER);
-  rect(39.5, 193, 20, 20);
-  rect(92.5, 193, 20, 20);
+  rect(39.5, 168, 20, 20);
+  rect(92.5, 168, 20, 20);
   rect(455.5, 167, 20, 20);
   rect(504.5, 167, 20, 20);
   rect(455.5, 217, 20, 20);
@@ -183,7 +200,10 @@ void startScreen() {
 
   fill(255);
   textSize(20);
-  text("↑  or W to apply burners", 150, 200);
+  text("↑  or W to apply burners", 150, 175);
+  textAlign(LEFT);
+  text("Spacebar to pause", 28,225);
+  textAlign(CENTER);
   text("← or A to rotate left  ", 550, 175);
   text("→ or D to rotate right", 550, 225);
   pop();
