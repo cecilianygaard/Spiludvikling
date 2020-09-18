@@ -3,17 +3,18 @@ import processing.sound.*;
 int levelI = 0;
 int numLevels = 4;
 int distToSurfZoom = 200;
-int distToSurfDust = 100;
+int distToSurfDust = 150;
 int timeTakenLevel = 0;
 boolean gameStarted = false;
-
+boolean paused = false;
 Spaceship s;
 Surface surf;
 StarryBackground background;
 ShipFragments shipDestroyed;
 Camera closeCam;
 DustyLanding dustCloud;
-SoundFile burnerSound;
+SoundFile burnerSound
+Highscore hs;
 
 void setup() {
   size(700, 700);
@@ -24,13 +25,22 @@ void setup() {
   dustCloud = new DustyLanding();
   closeCam = new Camera();
   burnerSound = new SoundFile(this,"Rocket-sound-effect.wav");
+  hs = new Highscore("data/highscore.txt");
 }
 
 void update() {
   s.update();
   surf.collisionSpaceship(s);
   dustCloud.calculateOrigin(s, surf);
-  
+  //Move the stars
+  if (s.location.x-closeCam.boundaryLeftX <= background.origin.x){
+
+    //background = new StarryBackground(new PVector(s.location.x-closeCam.boundaryLeftX, 0));
+  }else if (s.location.x+closeCam.boundaryLeftX >= background.origin.x+width+background.extra){
+    //background.updateParticelPosition(1);
+    //background = new StarryBackground(new PVector(s.location.x-closeCam.boundaryLeftX, 0));
+  }
+  //Replicate the surface
   if (s.location.x-closeCam.boundaryLeftX <= surf.points.get(0).x){
     surf.replicateLevel(-1);
   }else if (s.location.x+closeCam.boundaryLeftX >= surf.points.get(surf.points.size()-1).x){
@@ -40,13 +50,14 @@ void update() {
   if (s.distToSurf <= distToSurfZoom) {
     closeCam.update(s);
   }
+  
   if (s.burnersApplied) {
     PVector spaceshipToOrigin = PVector.sub(s.location, dustCloud.origin);
     float distSpaceshipToOrigin = spaceshipToOrigin.mag();
     burnerSound.play();
     if ( distSpaceshipToOrigin < distToSurfDust) {
       for (int i = 0; i < 2*(distSpaceshipToOrigin/distToSurfDust); i++) {
-        dustCloud.addParticle();
+        dustCloud.addParticle(spaceshipToOrigin);
       }
     }
   }
@@ -83,6 +94,9 @@ void draw() {
     pop();
     textField();
   } else if (!s.alive) {
+    if(hs.currentHighscore != s.score){
+      hs.updateHighscore(s.score);
+    }
     endScreen();
   } else {
     startScreen();
@@ -99,6 +113,18 @@ void keyPressed() {
     } else if (key == 'a' || keyCode == LEFT) {
       s.rotatingLeft = true;
     }
+  }
+  if(key == ' ' && !paused && gameStarted && s.alive) {
+    noLoop();
+    push();
+    textSize(32);
+    textAlign(CENTER);
+    text("Game Paused", width/2, 150);
+    pop();
+    paused = true;
+  } else if(key == ' ') {
+        loop();
+        paused = false;
   }
 }
 
@@ -165,8 +191,8 @@ void startScreen() {
   stroke(255);
   fill(0);
   rectMode(CENTER);
-  rect(39.5, 193, 20, 20);
-  rect(92.5, 193, 20, 20);
+  rect(39.5, 168, 20, 20);
+  rect(92.5, 168, 20, 20);
   rect(455.5, 167, 20, 20);
   rect(504.5, 167, 20, 20);
   rect(455.5, 217, 20, 20);
@@ -174,28 +200,34 @@ void startScreen() {
 
   fill(255);
   textSize(20);
-  text("↑  or W to apply burners", 150, 200);
+  text("↑  or W to apply burners", 150, 175);
+  textAlign(LEFT);
+  text("Spacebar to pause", 28,225);
+  textAlign(CENTER);
   text("← or A to rotate left  ", 550, 175);
   text("→ or D to rotate right", 550, 225);
-
   pop();
 }
 
 //WHEN THE bUTTON IS PRESSED WE SHOULD RESET ALL THE VALUES-
 void endScreen() {
   push();
+  //We draw from where the spacship actually is
+  closeCam.followSpaceship(s);
   //CHANGE TEXT AS THIS IS THE ENDSCREEN NOT THE START SCREEN
   background(0);
   background.run();
   surf.draw();
-  //s.draw(); INSTEAD OF DRAWING THE SPACESHIP WE SHALL SPAWN AND RUN THE SHIPFRAGMENTS PARTICLESYSTEM
   shipDestroyed.run();
+  pop();
+  push();
   textSize(32);
   textAlign(CENTER);
   fill(255);
   text("Game Over", width/2, 100);
   textSize(20);
   text("Your total score was: " + s.score, width/2, 150);
+  text("Highscore: " + hs.currentHighscore, width/2, 170);
   rectMode(CENTER);
   if (mouseX<width/2+50 && mouseX>width/2-50 && mouseY<height/2+20 && mouseY>height/2-20) {
     fill(155);

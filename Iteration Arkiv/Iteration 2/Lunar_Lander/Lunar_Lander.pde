@@ -1,7 +1,6 @@
 int levelI = 0;
-int numLevels = 4;
+int numLevels = 1;
 int distToSurfZoom = 200;
-int distToSurfDust = 100;
 int timeTakenLevel = 0;
 boolean gameStarted = false;
 
@@ -26,22 +25,15 @@ void update() {
   s.update();
   surf.collisionSpaceship(s);
   dustCloud.calculateOrigin(s, surf);
-  
-  if (s.location.x-closeCam.boundaryLeftX <= surf.points.get(0).x){
-    surf.replicateLevel(-1);
-  }else if (s.location.x+closeCam.boundaryLeftX >= surf.points.get(surf.points.size()-1).x){
-    surf.replicateLevel(1);
-  }
-  
   if (s.distToSurf <= distToSurfZoom) {
     closeCam.update(s);
-  }
-  if (s.burnersApplied) {
-    PVector spaceshipToOrigin = PVector.sub(s.location, dustCloud.origin);
-    float distSpaceshipToOrigin = spaceshipToOrigin.mag();
-    if ( distSpaceshipToOrigin < distToSurfDust) {
-      for (int i = 0; i < 2*(distSpaceshipToOrigin/distToSurfDust); i++) {
-        dustCloud.addParticle();
+    if (s.burnersApplied) {
+      PVector spaceshipToOrigin = PVector.sub(s.location, dustCloud.origin);
+      float distSpaceshipToOrigin = spaceshipToOrigin.mag();
+      if( distSpaceshipToOrigin < distToSurfZoom){
+        for (int i = 0; i < distSpaceshipToOrigin/distToSurfZoom; i++){
+          dustCloud.addParticle();
+        }
       }
     }
   }
@@ -49,7 +41,6 @@ void update() {
   if (s.landed) {
     //WE HAVE TO CALCULATE THE POINTS HERE AS WELL AND RESET TIME AND STUFF
     if (levelI < numLevels-1) {
-      levelI++;
       surf = new Surface("data/level"+str(levelI)+".txt");
     } else {
       levelI = 0;
@@ -67,8 +58,6 @@ void draw() {
     if (s.distToSurf <= distToSurfZoom) {
       scale(closeCam.zoom);
       translate(-closeCam.transX, -closeCam.transY);
-    } else {
-      closeCam.followSpaceship(s);
     }
     background(0);
     background.run();
@@ -117,8 +106,6 @@ void mousePressed() {
       s = new Spaceship();
       dustCloud = new DustyLanding();
       timeTakenLevel = millis()/1000;
-      levelI = 0;
-      surf = new Surface("data/level"+str(levelI)+".txt");
     } else {
       gameStarted = true;
     }
@@ -138,6 +125,7 @@ void textField() {
   text("Vertical Speed: " + round(s.velocity.y*100), 450, 100);
   pop();
 }
+
 void startScreen() {
   push();
   background(0);
@@ -156,23 +144,6 @@ void startScreen() {
   fill(0);
   textSize(15);
   text("Start Game", width/2, height/2+5); 
-
-  stroke(255);
-  fill(0);
-  rectMode(CENTER);
-  rect(39.5, 193, 20, 20);
-  rect(92.5, 193, 20, 20);
-  rect(455.5, 167, 20, 20);
-  rect(504.5, 167, 20, 20);
-  rect(455.5, 217, 20, 20);
-  rect(504.5, 217, 20, 20);
-
-  fill(255);
-  textSize(20);
-  text("↑  or W to apply burners", 150, 200);
-  text("← or A to rotate left  ", 550, 175);
-  text("→ or D to rotate right", 550, 225);
-
   pop();
 }
 

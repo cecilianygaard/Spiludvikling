@@ -6,7 +6,7 @@ class Spaceship {
   float w = 20;
   float h = 20;
   
-  int score;
+  float score;
   //We are basically using a mover-class here, though as it is the only object with this functionality we will just implement it directly
   //ALSO REMEMBER: COMPOSITION OVER INHERITANCE
   PVector location;
@@ -15,8 +15,10 @@ class Spaceship {
 
   //The angle of the rotation of the spaceship (in radians)
   float angle;
-  
+
+  //YEAH THIS SHOULD ALSO BE CALLIBRATED
   float burnerPower = -0.01;
+  //I HAVE CHANGED THE VALUE FOR DEVELOPMENT PURPOSES
   float fuel = 2000;
 
   //DIST TO SURFACE WILL BE UPDATED BY SURFACE'S COLLISION METHOD.
@@ -70,6 +72,8 @@ class Spaceship {
   }
 
   void applyGravity() { 
+    //!!!! THIS SHOULD DEFINITELY NOT BE A MEMBERVARIABLE!!!! AS WE SHOULD USE THE SAME GRAVITY FOR THE PARTICLES OR?
+    //WHAT SHOULD GRAVITY BE?
     PVector gravity = new PVector(0, 0.0005);
     //!!!!!
     acceleration.add(gravity);
@@ -91,6 +95,7 @@ class Spaceship {
   }
 
   void reset() {
+    //TIME WOULD NEED TO BE RESET AS WELL FOR CALCULATING THE POINTS
     timeTakenLevel = millis()/1000;
     location = new PVector(0, height/5);
     velocity = new PVector(0.7, 0.02);
