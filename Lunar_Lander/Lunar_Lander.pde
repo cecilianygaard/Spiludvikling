@@ -1,7 +1,7 @@
 int levelI = 0;
 int numLevels = 4;
 int distToSurfZoom = 200;
-int distToSurfDust = 100;
+int distToSurfDust = 150;
 int timeTakenLevel = 0;
 boolean gameStarted = false;
 
@@ -11,6 +11,7 @@ StarryBackground background;
 ShipFragments shipDestroyed;
 Camera closeCam;
 DustyLanding dustCloud;
+Highscore hs;
 
 void setup() {
   size(700, 700);
@@ -20,6 +21,7 @@ void setup() {
   background = new StarryBackground(new PVector());
   dustCloud = new DustyLanding();
   closeCam = new Camera();
+  hs = new Highscore("data/highscore.txt");
 }
 
 void update() {
@@ -88,6 +90,9 @@ void draw() {
     pop();
     textField();
   } else if (!s.alive) {
+    if(hs.currentHighscore != s.score){
+      hs.updateHighscore(s.score);
+    }
     endScreen();
   } else {
     startScreen();
@@ -203,6 +208,7 @@ void endScreen() {
   text("Game Over", width/2, 100);
   textSize(20);
   text("Your total score was: " + s.score, width/2, 150);
+  text("Highscore: " + hs.currentHighscore, width/2, 170);
   rectMode(CENTER);
   if (mouseX<width/2+50 && mouseX>width/2-50 && mouseY<height/2+20 && mouseY>height/2-20) {
     fill(155);
