@@ -36,6 +36,7 @@ void update() {
   if (s.distToSurf <= distToSurfZoom) {
     closeCam.update(s);
   }
+  
   if (s.burnersApplied) {
     PVector spaceshipToOrigin = PVector.sub(s.location, dustCloud.origin);
     float distSpaceshipToOrigin = spaceshipToOrigin.mag();
@@ -172,19 +173,21 @@ void startScreen() {
   text("↑  or W to apply burners", 150, 200);
   text("← or A to rotate left  ", 550, 175);
   text("→ or D to rotate right", 550, 225);
-
   pop();
 }
 
 //WHEN THE bUTTON IS PRESSED WE SHOULD RESET ALL THE VALUES-
 void endScreen() {
   push();
+  //We draw from where the spacship actually is
+  closeCam.followSpaceship(s);
   //CHANGE TEXT AS THIS IS THE ENDSCREEN NOT THE START SCREEN
   background(0);
   background.run();
   surf.draw();
-  //s.draw(); INSTEAD OF DRAWING THE SPACESHIP WE SHALL SPAWN AND RUN THE SHIPFRAGMENTS PARTICLESYSTEM
   shipDestroyed.run();
+  pop();
+  push();
   textSize(32);
   textAlign(CENTER);
   fill(255);
