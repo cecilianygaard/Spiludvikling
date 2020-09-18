@@ -7,6 +7,7 @@ class Spaceship {
   float h = 20;
   
   int score;
+  int scoreGainedRound;
   //We are basically using a mover-class here, though as it is the only object with this functionality we will just implement it directly
   //ALSO REMEMBER: COMPOSITION OVER INHERITANCE
   PVector location;
@@ -119,15 +120,12 @@ class Spaceship {
       location.add(velocity);
       //We clear the acceleration
       acceleration.mult(0);
-    } else if (!alive) {
-      println("AHH U DIED");
-    } else if (landed) {
-      println("WUHUUU YOU LANDED SUCCESSFULLY");
-    }
+  }
   }
 
   void givePoints(LandingPlatform platform) {
-    score += 500*platform.point/(millis()/1000-timeTakenLevel);
+    scoreGainedRound = 500*platform.point/(millis()/1000-timeTakenLevel);
+    score += scoreGainedRound;
   }
 
   void draw() {
