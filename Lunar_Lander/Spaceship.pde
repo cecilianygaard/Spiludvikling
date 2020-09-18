@@ -16,10 +16,8 @@ class Spaceship {
 
   //The angle of the rotation of the spaceship (in radians)
   float angle;
-
-  //YEAH THIS SHOULD ALSO BE CALLIBRATED
+  
   float burnerPower = -0.01;
-  //I HAVE CHANGED THE VALUE FOR DEVELOPMENT PURPOSES
   float fuel = 2000;
 
   //DIST TO SURFACE WILL BE UPDATED BY SURFACE'S COLLISION METHOD.

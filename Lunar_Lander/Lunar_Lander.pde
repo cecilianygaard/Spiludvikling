@@ -1,3 +1,5 @@
+import processing.sound.*;
+
 int levelI = 0;
 int numLevels = 4;
 int distToSurfZoom = 200;
@@ -11,6 +13,7 @@ StarryBackground background;
 ShipFragments shipDestroyed;
 Camera closeCam;
 DustyLanding dustCloud;
+SoundFile burnerSound
 Highscore hs;
 
 void setup() {
@@ -21,6 +24,7 @@ void setup() {
   background = new StarryBackground(new PVector());
   dustCloud = new DustyLanding();
   closeCam = new Camera();
+  burnerSound = new SoundFile(this,"Rocket-sound-effect.wav");
   hs = new Highscore("data/highscore.txt");
 }
 
@@ -50,6 +54,7 @@ void update() {
   if (s.burnersApplied) {
     PVector spaceshipToOrigin = PVector.sub(s.location, dustCloud.origin);
     float distSpaceshipToOrigin = spaceshipToOrigin.mag();
+    burnerSound.play();
     if ( distSpaceshipToOrigin < distToSurfDust) {
       for (int i = 0; i < 2*(distSpaceshipToOrigin/distToSurfDust); i++) {
         dustCloud.addParticle(spaceshipToOrigin);
