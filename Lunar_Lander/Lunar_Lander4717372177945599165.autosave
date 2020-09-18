@@ -14,6 +14,7 @@ ShipFragments shipDestroyed;
 Camera closeCam;
 DustyLanding dustCloud;
 SoundFile burnerSound;
+SoundFile playerLanding;
 Highscore hs;
 
 void setup() {
@@ -33,24 +34,24 @@ void update() {
   surf.collisionSpaceship(s);
   dustCloud.calculateOrigin(s, surf);
   //Move the stars
-  if (s.location.x-closeCam.boundaryLeftX <= background.origin.x) {
+  if (s.location.x-closeCam.boundaryLeftX <= background.origin.x){
 
     //background = new StarryBackground(new PVector(s.location.x-closeCam.boundaryLeftX, 0));
-  } else if (s.location.x+closeCam.boundaryLeftX >= background.origin.x+width+background.extra) {
+  }else if (s.location.x+closeCam.boundaryLeftX >= background.origin.x+width+background.extra){
     //background.updateParticelPosition(1);
     //background = new StarryBackground(new PVector(s.location.x-closeCam.boundaryLeftX, 0));
   }
   //Replicate the surface
-  if (s.location.x-closeCam.boundaryLeftX <= surf.points.get(0).x) {
+  if (s.location.x-closeCam.boundaryLeftX <= surf.points.get(0).x){
     surf.replicateLevel(-1);
-  } else if (s.location.x+closeCam.boundaryLeftX >= surf.points.get(surf.points.size()-1).x) {
+  }else if (s.location.x+closeCam.boundaryLeftX >= surf.points.get(surf.points.size()-1).x){
     surf.replicateLevel(1);
   }
-
+  
   if (s.distToSurf <= distToSurfZoom) {
     closeCam.update(s);
   }
-
+  
   if (s.burnersApplied) {
     PVector spaceshipToOrigin = PVector.sub(s.location, dustCloud.origin);
     float distSpaceshipToOrigin = spaceshipToOrigin.mag();
@@ -68,22 +69,19 @@ void update() {
 
   if (s.landed) {
     //WE HAVE TO CALCULATE THE POINTS HERE AS WELL AND RESET TIME AND STUFF
-    if (keyPressed) {
-      if (levelI < numLevels-1) {
-        levelI++;
-        surf = new Surface("data/level"+str(levelI)+".txt");
-      } else {
-        levelI = 0;
-        surf = new Surface("data/level"+str(levelI)+".txt");
-      }
-      s.reset();
-      dustCloud = new DustyLanding();
+    if (levelI < numLevels-1) {
+      levelI++;
+      surf = new Surface("data/level"+str(levelI)+".txt");
+    } else {
+      levelI = 0;
+      surf = new Surface("data/level"+str(levelI)+".txt");
     }
+    s.reset();
+    dustCloud = new DustyLanding();
   }
 }
 
 void draw() {
-  background(0);
   if (gameStarted && s.alive) {
     update();
     push();
@@ -93,26 +91,15 @@ void draw() {
     } else {
       closeCam.followSpaceship(s);
     }
-
+    background(0);
     background.run();
     surf.draw();
     dustCloud.run();
     s.draw();
-        if(s.landed) {
-      push();
-    textAlign(CENTER);
-    fill(255);
-    
-    text("Successfull landing!", s.location.x, s.location.y-100); 
-    text("Earned " + s.scoreGainedRound + " points!", s.location.x, s.location.y-75);
-    text("Press any key to continue", s.location.x, s.location.y-50);
-    pop();
-    }
     pop();
     textField();
-
   } else if (!s.alive) {
-    if (hs.currentHighscore != s.score) {
+    if(hs.currentHighscore != s.score){
       hs.updateHighscore(s.score);
     }
     endScreen();
@@ -132,7 +119,7 @@ void keyPressed() {
       s.rotatingLeft = true;
     }
   }
-  if (key == ' ' && !paused && gameStarted && s.alive) {
+  if(key == ' ' && !paused && gameStarted && s.alive) {
     noLoop();
     push();
     textSize(32);
@@ -140,9 +127,9 @@ void keyPressed() {
     text("Game Paused", width/2, 150);
     pop();
     paused = true;
-  } else if (key == ' ') {
-    loop();
-    paused = false;
+  } else if(key == ' ') {
+        loop();
+        paused = false;
   }
 }
 
@@ -220,7 +207,7 @@ void startScreen() {
   textSize(20);
   text("↑  or W to apply burners", 150, 175);
   textAlign(LEFT);
-  text("Spacebar to pause", 28, 225);
+  text("Spacebar to pause", 28,225);
   textAlign(CENTER);
   text("← or A to rotate left  ", 550, 175);
   text("→ or D to rotate right", 550, 225);
