@@ -39,7 +39,7 @@ class StarryBackground extends ParticleSystem {
   int extra = StarParticle.extra;
   StarryBackground(PVector location) {
     super(location);
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 2000; i++) {
       addParticle();
     }
   }

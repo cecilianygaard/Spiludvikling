@@ -25,7 +25,6 @@ void setup() {
 }
 
 void update() {
-  println(frameRate);
   s.update();
   surf.collisionSpaceship(s);
   dustCloud.calculateOrigin(s, surf);
