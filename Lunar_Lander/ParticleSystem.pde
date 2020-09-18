@@ -1,6 +1,8 @@
 import java.util.Iterator;
 
 interface Particle {
+  PVector location = new PVector();
+  
   void update();
   void draw();
   void run();

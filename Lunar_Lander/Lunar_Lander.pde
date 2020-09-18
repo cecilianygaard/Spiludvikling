@@ -23,10 +23,19 @@ void setup() {
 }
 
 void update() {
+  println(frameRate);
   s.update();
   surf.collisionSpaceship(s);
   dustCloud.calculateOrigin(s, surf);
-  
+  //Move the stars
+  if (s.location.x-closeCam.boundaryLeftX <= background.origin.x){
+
+    //background = new StarryBackground(new PVector(s.location.x-closeCam.boundaryLeftX, 0));
+  }else if (s.location.x+closeCam.boundaryLeftX >= background.origin.x+width+background.extra){
+    //background.updateParticelPosition(1);
+    //background = new StarryBackground(new PVector(s.location.x-closeCam.boundaryLeftX, 0));
+  }
+  //Replicate the surface
   if (s.location.x-closeCam.boundaryLeftX <= surf.points.get(0).x){
     surf.replicateLevel(-1);
   }else if (s.location.x+closeCam.boundaryLeftX >= surf.points.get(surf.points.size()-1).x){

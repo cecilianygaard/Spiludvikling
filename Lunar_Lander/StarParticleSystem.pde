@@ -4,9 +4,9 @@ class StarParticle implements Particle {
   int r;
   float t;
   float phaseShift;
-
-  StarParticle() {
-    location = new PVector(random(0, width), random(0, height));
+  static final int extra = 10000;
+  StarParticle(PVector origin) {
+    location = new PVector(origin.x+random(-extra, width+extra), origin.y+random(0, height));
     alpha = int(random(100, 255));
     r = int(random(2, 5));
     phaseShift = random(-4, 4);
@@ -36,14 +36,15 @@ class StarParticle implements Particle {
 }
 
 class StarryBackground extends ParticleSystem {
+  int extra = StarParticle.extra;
   StarryBackground(PVector location) {
     super(location);
-    for (int i = 0; i < 200; i++) {
+    for (int i = 0; i < 1000; i++) {
       addParticle();
     }
   }
 
   void addParticle() {
-    particles.add(new StarParticle());
+    particles.add(new StarParticle(origin));
   }
 }
